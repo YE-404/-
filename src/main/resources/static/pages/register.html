@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-model="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8" />
+    <!--script type="text/javascript" src="js/jquery.js"></script-->
+    <script type="application/x-javascript">
+        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+    <meta
+            name="keywords"
+            content="Flat Dark Web Login Form Responsive Templates, Iphone Widget Template, Smartphone login forms,Login form, Widget Template, Responsive Templates, a Ipad 404 Templates, Flat Responsive Templates"
+    />
+    <link href="../css/login/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"/>
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../css/font-icon-style.css"/>
+    <link rel="stylesheet" href="../css/style.default.css" id="theme-stylesheet"/>
+
+
+</head>
+<body alink="white" vlink="pink">
+
+<br/><br/><br/><br/>
+<h2 align="center">机房识别系统</h2>
+
+<div class="login-form">
+    <div id="app">
+    <div class="close"></div>
+    <div class="head-info">
+        <label class="lbl-1"> </label>
+        <label class="lbl-2"> </label>
+        <label class="lbl-3"> </label>
+    </div>
+        <br/>
+    <div class="clear">
+            <div class="avatar">
+                <img v-bind:src = "avatarUrl" alt ="..." class="img-fluid rounded-circle"/>
+            </div>
+    </div>
+
+        <a href="#" id="changAvatar" @click="changAvatar">换一张</a>
+    <form >
+<!--    /mydemo_war/user/register    -->
+
+        <input
+                type="text"
+                class="text"
+                name = "username"
+                id = "username"
+                v-model="user.username"
+                @blur="onblur"
+        />
+        <div>
+<!--      onfocus= "this.value = '';"      value = "请输入账号"-->
+        </div>
+        <div class="key">
+            <input
+                    type="password"
+                    name = "password"
+                    value = "请输入密码"
+                    v-model="user.password"
+            />
+<!--            onfocus="this.value = '';"-->
+<!--            onblur="if (this.value == '') {this.value = 'Password';}"-->
+        </div>
+        <font color="red">{{message}}</font><br>
+        <input type="text1" class="text1" name = "checkCode" id = "checkCode" v-model="user.checkCode"/>
+        <a href="#" id="changImg" @click="checkCode">看不清，换一张</a>
+        <img id="checkCodeImg" src="/user/checkcodeservlet">
+
+        <br/><br/>
+            <div class="signin">
+                <input type="button" value="Register"  @click="submit">
+<!--                -->
+            </div>
+            <a href="/user/logincover">已有账号，去登录</a>
+    </form>
+</div>
+</div>
+
+    <script src="../js/axios-0.18.0.js" ></script>
+    <script src="../js/vue.js"></script>
+<script>
+    var local = window.location.host;
+    var port = window.location.port;
+    var ip = window.location.hostname;
+    console.log(ip);
+    new Vue({
+        el:"#app",
+        data(){
+            return{
+                message:"",
+                user: {},
+                url:checkCode,
+                avatarUrl:"http://" + ip + "/Avatar/avatar.jpg"
+
+            }
+        },
+        methods:{
+            onblur(){
+                console.log(this.user.username);
+                var _this = this;
+                axios({
+                    method:"post",
+                    url: "http://" + local + "/user/registercheck",
+                    data: _this.user
+                }).then(function (resp){
+                    _this.message = resp.data;
+                    console.log(_this.message);
+                })
+            },
+            submit(){
+                var _this = this;
+                axios({
+                    method:"post",
+                    url: "http://" + local + "/user/register",
+                    data: _this.user
+                }).then(function (resp){
+                    _this.message = resp.data;
+                    console.log(_this.message);
+                })
+            },
+            checkCode(){
+                let vdo = document.getElementById("checkCodeImg")
+                var src = "http://" + local + "/user/checkcodeservlet?"+ new Date().getMilliseconds();
+                vdo.src = src
+                console.log(vdo.src);
+                //return src;
+            },
+            changAvatar(){
+                axios({
+                    method:"get",
+                    url:"http://" + local + "/user/createPicture"
+                }).then(resp =>{
+                    console.log(resp.data);
+                    this.avatarUrl = resp.data;
+                })
+            }
+        }
+    //     mounted(){
+    //         this.changAvatar();
+    //         this.changAvatar();
+    //         // axios({
+    //         //     method:"get",
+    //         //     url:"http://localhost:8080/user/createPicture"
+    //         // }).then(resp =>{
+    //         //     console.log(resp.data);
+    //         //     this.avatarUrl = resp.data;
+    //         //
+    //         // })
+    //     }
+     })
+</script>
+
+</body>
+</html>
+
+

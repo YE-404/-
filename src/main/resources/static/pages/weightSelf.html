@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+ <head> 
+  <meta charset="utf-8" /> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+  <meta name="description" content="" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+  <meta name="robots" content="all,follow" /> 
+  <title></title> 
+  <link rel="shortcut icon" href="img/favicon.ico" /> 
+  <!-- global stylesheets --> 
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet" /> 
+  <link rel="stylesheet" href="../css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../css/font-icon-style.css" />
+  <link rel="stylesheet" href="../css/style.default.css" id="theme-stylesheet" />
+  <!-- Core stylesheets --> 
+  <link rel="stylesheet" href="../css/form.css" />
+ </head> 
+ <body>
+ <div id="menuApp">
+  <!--====================================================
+                     MAIN NAVBAR
+======================================================-->
+  <header class="header">
+   <nav class="navbar navbar-expand-lg ">
+    <div class="search-box">
+     <button class="dismiss"><i class="icon-close"></i></button>
+     <form id="searchForm" action="#" role="search">
+      <input type="search" placeholder="Search Now" class="form-control">
+     </form>
+    </div>
+    <div class="container-fluid ">
+     <div class="navbar-holder d-flex align-items-center justify-content-between">
+      <div class="navbar-header">
+       <a href="hostservlet" class="navbar-brand">
+        <div class="brand-text brand-big hidden-lg-down"><img src="../img/logo-white.png" alt="Logo" class="img-fluid"></div>
+        <div class="brand-text brand-small"><img src="../img/logo-icon.png" alt="Logo" class="img-fluid"></div>
+       </a>
+       <a id="toggle-btn" href="#" class="menu-btn active">
+        <span></span>
+        <span></span>
+        <span></span>
+       </a>
+      </div>
+     </div>
+     <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+      <li class="nav-item dropdown"><a id="profile" class="nav-link logout" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle" style="height: 30px; width: 30px;"></a>
+       <ul aria-labelledby="profile" class="dropdown-menu profile">
+
+        <li>
+         <a rel="nofollow" href="#" class="dropdown-item d-flex">
+          <div class="msg-profile"> <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"></div>
+          <div class="msg-body">
+           <h3 class="h5">{{user.username}}</h3>
+          </div>
+         </a>
+         <hr>
+        </li>
+
+        <li>
+         <a rel="nofollow" href="profile" class="dropdown-item">
+          <div class="notification">
+           <div class="notification-content"><i class="fa fa-user "></i>用户基本信息</div>
+          </div>
+         </a>
+        </li>
+
+        <li>
+         <a rel="nofollow" href="logout" class="dropdown-item">
+          <div class="notification">
+           <div class="notification-content"><i class="fa fa-power-off"></i>注销</div>
+          </div>
+         </a>
+        </li>
+       </ul>
+      </li>
+     </ul>
+    </div>
+   </nav>
+  </header>
+  <!--====================================================
+                    PAGE CONTENT
+======================================================--> 
+  <div class="page-content d-flex align-items-stretch"> 
+   <!--***** SIDE NAVBAR *****-->
+   <nav class="side-navbar">
+    <div class="sidebar-header d-flex align-items-center" >
+     <div class="avatar">
+      <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"/>
+      <!--     "../img/avatar-1.jpg"           -->
+     </div>
+     <div class="title">
+      <h1 class="h4">{{user.username}}</h1>
+     </div>
+    </div>
+    <hr/>
+    <!-- Sidebar Navidation Menus-->
+    <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+    <ul class="list-unstyled">
+     <li><a href="hostservlet"><i class="icon-home"></i>主页</a></li>
+     <li><a href="#forms" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-building-o"></i>检测功能 </a>
+      <ul id="forms" class="collapse list-unstyled">
+       <li><a href="lightcheck">开关/彩灯识别</a></li>
+       <li><a href="clockcheck">数显/指针表识别</a></li>
+      </ul>
+     </li>
+     <li><a href="spellservlet"> <i class="fa fa-map-o"></i>图像拼接 </a></li>
+     <li><a href="#apps" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>数据库查询
+     </a>
+      <ul id="apps" class="collapse list-unstyled">
+       <li><a href="lighttable">彩灯数据库</a></li>
+       <li><a href="switchtable">开关数据库</a></li>
+       <li><a href="numbertable">数显表数据库</a></li>
+       <li><a href="pointtable">指针表数据库</a></li>
+      </ul>
+     </li>
+     <li><a href="#pages" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-file-o"></i>模型管理 </a>
+      <ul id="pages" class="collapse list-unstyled">
+       <li class="active"><a href="weightSelf">我的模型</a></li>
+       <li><a href="weightServlet">模型仓库</a></li>
+      </ul>
+     </li>
+    </ul>
+    <span class="heading" id="managerInfo1">管理员功能</span>
+    <ul class="list-unstyled" id="managerInfo2" >
+     <li><a href="manageservlet"> <i class="fa fa-globe"></i>系统管理</a></li>
+     <li><a href="logmanage"> <i class="fa fa-file-o"></i>日志管理</a></li>
+    </ul>
+   </nav>
+
+
+   <div class="content-inner form-cont">
+   <el-card class="box-card" style="width: 1400px">
+
+    <el-form :inline="true" :model="search_" class="demo-form-inline">
+
+     <el-form-item label="搜索内容">
+      <el-input v-model="search_.content" placeholder="搜索内容"></el-input>
+     </el-form-item>
+      <el-button type="primary" @click="onSubmit">查询</el-button>
+      <el-button type="success" @click="clear">清空</el-button>
+      <el-button plain type="info" @click="information = true">使用说明</el-button>
+    </el-form>
+
+    <el-row>
+     <el-col :span="4" v-for="(weight, index) in weights" :key="index" :offset="index > 0 && index %5 != 0 ? 1:0">
+<!--   :fit="fit"   -->
+      <el-card :body-style="{ padding: '0px' }" style="width: 250px">
+       <el-image style="width: 250px; height: 280px" v-bind:src="weight.url" ></el-image>
+       <div style="padding: 14px;">
+        <span>{{weight.category}}</span>
+        <hr/>
+        <div class="bottom clearfix" align="center">
+<!--         <time class="time">{{ weight.date }}</time>-->
+         <el-button type="primary" size="mini"  @click="details(weight.message)">详情</el-button>
+         <el-button type="warning":loading="weight.train" size="mini"  @click="pageshow(weight.id,weight.category,weight.state)">更新</el-button>
+         <el-button type="danger" size="mini"  @click="deleteWeight(weight.id)">删除</el-button><br/><br/>
+         <el-button type="success":loading="weight.state" size="mini"  @click="useWeight(weight.id,weight.train)">启用: {{weight.state}}</el-button>
+        </div>
+       </div>
+      </el-card>
+     </el-col>
+    </el-row>
+
+    <el-dialog title="新增权重文件" :visible.sync="open">
+     <el-form :model="pageshowMes"  label-width="80px" size="small" >
+<!--   align="center"    -->
+      <h6>&nbsp;上传训练集图片: </h6>
+      <label class="ui-upload" style="background-color: #ec6804;">训练集图片上传<input type="file" name="file1" id="file1" ref="refFile1" v-on:change="fileLoad('file1')" style="display: none;" /></label>
+      <label>{{uploadFileMes.file1}}</label>
+      <hr/>
+      <h6>&nbsp; 上传训练集XML文件:</h6>
+      <label class="ui-upload" style="background-color: #5bc71f;">训练集XML上传<input type="file" name="file2" id="file2" ref="refFile2" v-on:change="fileLoad('file2')" style="display: none;" /></label>
+      <label>{{uploadFileMes.file2}}</label>
+      <hr/>
+      <h6>&nbsp;上传测试集图片:</h6>
+      <label class="ui-upload">测试集图片上传<input type="file" name="file3"  id="file3" ref="refFile3" v-on:change="fileLoad('file3')" style="display: none;" /></label>
+      <label>{{uploadFileMes.file3}}</label>
+      <hr/>
+      <h6>&nbsp; 上传测试集XML文件:</h6>
+      <label class="ui-upload" style="background-color: #691fc7;">测试集XML上传<input type="file" name="file4"  id="file4" ref="refFile4" v-on:change="fileLoad('file4')" style="display: none;" /></label>
+      <label>{{uploadFileMes.file4}}</label>
+      <hr/>
+      <div align="right">
+       <input type="button" class="btn btn-outline-primary" @click="update(pageshowMes.id,pageshowMes.category)" value="上 传">
+       <input type="button" class="btn btn-outline-secondary" @click="open = false" value="取 消">
+       <!--       <el-button type="primary" @click="sure">确 定</el-button>-->
+      </div>
+     </el-form>
+    </el-dialog>
+
+    <el-dialog title="使用说明" :visible.sync="information">
+     <el-collapse accordion>
+      <el-collapse-item title="启用&禁用" name="1">
+       <div>1、用户可根据实际情况选择需要启用的模型;</div>
+       <div>2、仪表类读数需要同时启用Inside和Indicator类;</div>
+       <div>3、同一类同时只能启用一种;</div>
+       <div>4、在更新中的模型无法启用;</div>
+      </el-collapse-item>
+      <el-collapse-item title="关于更新" name="2">
+       <div>1、更新功能是为了解决用户在实际使用中存在一些器件模型无法识别的问题；</div>
+       <div>2、用户可根据模型详情中的描述，制作训练集和测试集，并选择需要重训练的模型点击『更新』;</div>
+       <div>3、在启用中的模型无法更新;</div>
+       <div>4、用户在对应区域上传相应的文件即可，上传文件结构须严格按照说明设置;</div>
+       <div>• 训练集照片文件格式为:</div>
+<!--   :props="defaultProps"   v-model="activeNames"  -->
+       <el-tree :data="explain1" ></el-tree>
+       <div>• 训练集XML文件格式为:</div>
+       <el-tree :data="explain2" ></el-tree>
+       <div>• 测试集照片文件格式为:</div>
+       <el-tree :data="explain3" ></el-tree>
+       <div>• 测试集XML文件格式为:</div>
+       <el-tree :data="explain4" ></el-tree>
+      </el-collapse-item>
+
+     </el-collapse>
+
+
+
+    </el-dialog>
+
+
+    <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-sizes="[5, 10, 15, 20]"
+            :page-size="5"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="totalCount">
+    </el-pagination>
+   </el-card>
+
+   </div>
+
+
+
+  </div>
+ </div>
+  <!--Global Javascript -->
+ <script src="../js/jquery.min.js"></script>
+ <script src="../js/popper/popper.min.js"></script>
+ <script src="../js/tether.min.js"></script>
+ <script src="../js/bootstrap.min.js"></script>
+ <script src="../js/jquery.cookie.js"></script>
+ <script src="../js/jquery.validate.min.js"></script>
+ <script src="../js/chart.min.js"></script>
+ <script src="../js/front.js"></script>
+ <script src="../js/axios-0.18.0.js" ></script>
+ <script src="../js/vue.js"></script>
+ <script src="../element-ui/lib/index.js"></script>
+ <!--<script src="../js/chart-page.js"></script>-->
+ <link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+  <!--Core Javascript --> 
+
+  <script>
+        var ip = window.location.hostname;
+        var local = window.location.host;
+        var chat = new Vue({
+            el:"#menuApp",
+            data(){
+             return {
+              search_: {
+               type: null,
+               content: null
+              },
+              explain1:[{
+               label: 'train_pic.zip',
+               children: [{
+                label: 'train_pic',
+                children: [{
+                 label: '00001.jpg,00002.jpg ... xxxxx.jpg (按5位纯数字命名)'
+                }]
+               }]
+              }],
+              explain2:[{
+               label: 'train_xml.zip',
+               children: [{
+                label: 'train_xml',
+                children: [{
+                 label: '00001.xml,00002.xml ... xxxxx.xml (名称须与训练集一致，并与之一一对应)'
+                }]
+               }]
+              }],
+              explain3:[{
+               label: 'test_pic.zip',
+               children: [{
+                label: 'test_pic',
+                children: [{
+                 label: '10001.jpg,10002.jpg ... yyyyy.jpg (按5位纯数字命名，不得与训练集重名)'
+                }]
+               }]
+              }],
+              explain4:[{
+               label: 'test_xml.zip',
+               children: [{
+                label: 'test_xml',
+                children: [{
+                 label: ' 10001.xml,10002.xml ... yyyyy.xml (名称须与测试集一致，并与之一一对应)'
+                }]
+               }]
+              }],
+              open:false,
+              information:false,
+              uploadFileMes: {
+               file1: "暂无文件",
+               file2: "暂无文件",
+               file3: "暂无文件",
+               file4: "暂无文件"
+              },
+              user:[],
+              weights:[],
+              pageshowMes:{
+               id:"",
+               category:""
+              },
+              totalCount:100,
+              pageSize:5,
+              currentPage: 1,
+              mes:""
+             }
+            },
+            methods: {
+             fileLoad(file) {
+              var selectedFile;
+              if(file === "file1"){
+               selectedFile = this.$refs.refFile1.files[0];
+               this.uploadFileMes.file1 = selectedFile.name;
+              }else if(file === "file2"){
+               selectedFile = this.$refs.refFile2.files[0];
+               this.uploadFileMes.file2 = selectedFile.name;
+              }else if(file === "file3"){
+               selectedFile = this.$refs.refFile3.files[0];
+               this.uploadFileMes.file3 = selectedFile.name;
+              }else if(file === "file4"){
+               selectedFile = this.$refs.refFile4.files[0];
+               this.uploadFileMes.file4 = selectedFile.name;
+              }
+              console.log("文件名:" + selectedFile.name);
+              this.open = false;
+              this.open = true;
+             },
+
+             onSubmit() {                     //搜索
+              this.search_.type = 'type';
+              console.log(this.search_)
+              this.selectALl();
+             },
+             handleSizeChange(val) {            //分页
+              this.pageSize = val;
+              this.selectALl();
+              //console.log(`每页 ${val} 条`);
+             },
+             handleCurrentChange(val) {
+              this.currentPage = val;
+              this.selectALl();
+              //.log(`当前页: ${val}`);
+             },
+             deleteWeight(id){
+              var _this = this;
+              this.$confirm('此操作将永久删除该模型, 是否继续?', '提示', {
+               confirmButtonText: '确定',
+               cancelButtonText: '取消',
+               type: 'warning'
+              }).then(() => {
+               axios({
+                method: "post",
+                url: "http://" + local + "/selfWeight/deleteWeightById?id="+ id,
+               }).then(resp => {
+                this.mes = resp.data;
+                console.log(resp.data);
+                if(this.mes === "ok"){
+                 this.$message({type: 'success', message: '删除成功!',customClass:'new_z_index'});
+                }else{
+                 this.$message({type: 'error', message: this.mes,customClass:'new_z_index'});
+                }
+                this.selectALl();
+               })
+              }).catch(() => {
+               _this.$message({type: 'info', message: '已取消删除',customClass:'new_z_index'});
+              });
+             },
+             selectALl() {
+              axios({
+               method: "post",
+               url: "http://" + local + "/selfWeight/showSelfWeight?currentPage=" + this.currentPage + "&pageSize=" + this.pageSize,
+               data:this.search_
+              }).then(resp => {
+               console.log(resp.data);
+               this.weights = resp.data.rows;
+               this.totalCount = resp.data.totalCount;
+               if(this.totalCount<1) this.totalCount = 1;
+               var maxPageCount = Math.ceil(this.totalCount/this.pageSize);
+               if(this.currentPage>maxPageCount){
+                this.currentPage = maxPageCount;
+                this.show();
+               }
+              })
+             },
+             show(){
+              axios({
+               method: "post",
+               url: "http://" + local + "/selfWeight/selectByPageAndCondition?currentPage=" + this.currentPage + "&pageSize=" + this.pageSize,
+               data:this.search_
+              }).then(resp => {
+               console.log(resp.data);
+               this.weights = resp.data.rows;
+               this.totalCount = resp.data.totalCount;
+              })
+             },
+             clear() {
+              this.search_.content = null;
+              this.search_.type = null;
+              axios({
+               method: "post",
+               url: "http://" + local + "/selfWeight/selectByPageAndCondition?currentPage=" + this.currentPage + "&pageSize=" + this.pageSize,
+               data:this.search_
+              }).then(resp => {
+               this.weights = resp.data.rows;
+               this.totalCount = resp.data.totalCount;
+              })
+             },
+             details(message){
+              this.$alert(message, '模型描述', {
+               confirmButtonText: '确定'
+              });
+             },
+             update(id,category){
+               var formData = new FormData();
+               if($("#file1")[0].files[0] == null || $("#file2")[0].files[0] == null ||
+                $("#file3")[0].files[0] == null|| $("#file4")[0].files[0] == null){
+                this.$message({type: 'error', message:"请上传训练集和测试集文件",customClass:'new_z_index'});
+                return;
+               }
+               formData.append("fileImg",$("#file1")[0].files[0]);
+               formData.append("fileXml",$("#file2")[0].files[0]);
+               formData.append("fileImg",$("#file3")[0].files[0]);
+               formData.append("fileXml",$("#file4")[0].files[0]);
+               formData.append("id",id);
+               formData.append("category",category);
+               axios({
+                method: "post",
+                url: "http://" + local + "/train/updateWeight",
+                data:formData,
+               }).then(resp => {
+                console.log(resp.data);
+                if(resp.data === "ok"){
+                 this.$message({type: 'success', message: "开始训练",customClass:'new_z_index'});
+                 this.open = false;
+                 this.selectALl();
+                 this.startTrain(id);
+                 //this.selectALl();
+                }
+                else
+                 this.$message({type: 'error', message: resp.data,customClass:'new_z_index'});
+               })
+             },
+             startTrain(id){
+              axios({
+               method: "post",
+               url: "http://" + local + "/train/startTrainWeight",
+               data:id,
+              }).then(resp => {
+               this.$message({type: 'warning', message: "训练完成",customClass:'new_z_index'});
+               this.selectALl();
+              })
+             },
+             pageshow(id,category,state){
+              if(state === true){
+               this.$message({type: 'error', message:"该模型正在使用中，无法更新",customClass:'new_z_index'});
+               return;
+              }
+              this.pageshowMes.category = category;
+              this.pageshowMes.id = id;
+              this.open = true;
+             },
+             useWeight(id,train){
+              if(train === true){
+               this.$message({type: 'error', message:"该模型正在更新中，无法使用",customClass:'new_z_index'});
+               return;
+              }
+              axios({
+               method: "post",
+               url: "http://" + local + "/selfWeight/useWeightById?id="+ id,
+              }).then(resp => {
+               this.mes = resp.data;
+               console.log(resp.data);
+               if(this.mes === "ok"){
+                this.$message({type: 'success', message: '已修改!',customClass:'new_z_index'});
+               }else{
+                this.$message({type: 'error', message: this.mes,customClass:'new_z_index'});
+               }
+               this.selectALl();
+              })
+             }
+            },
+            mounted(){
+               this.selectALl();
+               axios({
+                method:"get",
+                url:"http://" + local + "/menu/hostdataservlet"
+               }).then(resp =>{
+                this.user = resp.data;
+                if(this.user.id === 15){
+                 $("#managerInfo1").show();
+                 $("#managerInfo2").show();
+                }else{
+                 $("#managerInfo1").hide();
+                 $("#managerInfo2").hide();
+                }
+               })
+            }
+        })
+
+  </script>
+
+ <style>
+  .upload-demo{
+   display: inline-block;
+  }
+  .new_z_index {
+   z-index:99000 !important;
+  }
+
+  #btn{
+   width: 100px;
+   height: 35px;
+   background: #39f;
+   line-height: 45px;
+   text-align: center;
+   color: #fff;
+  }
+
+  #btn .file{
+   opacity: 0;
+   position: relative;
+   top: -56px;
+   width: 100%;
+   height: 45px;
+  }
+
+
+  .ui-upload {
+   height: 30px;
+   width: 120px;
+   background-color: #00abff;
+   font-size: 14px;
+   line-height: 30px;
+   cursor: pointer;
+   display: inline-block;
+   text-align: center;
+   color: #fff;
+   border-radius: 3px;
+   margin-left: 20px;
+  }
+
+
+   .upload-demo{
+    display: inline-block;
+   }
+  .new_z_index {
+   z-index:99000 !important;
+  }
+
+ </style>
+
+
+ </body>
+</html>

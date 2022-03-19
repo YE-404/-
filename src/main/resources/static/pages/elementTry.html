@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="all,follow" />
+    <title></title>
+    <link rel="shortcut icon" href="img/favicon.ico" />
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/font-icon-style.css" />
+    <link rel="stylesheet" href="../css/style.default.css" id="theme-stylesheet" />
+</head>
+<body>
+<div id="menuApp">
+<!--====================================================
+                       MAIN NAVBAR
+======================================================-->
+<header class="header">
+    <nav class="navbar navbar-expand-lg ">
+        <div class="search-box">
+            <button class="dismiss"><i class="icon-close"></i></button>
+            <form id="searchForm" action="#" role="search">
+                <input type="search" placeholder="Search Now" class="form-control">
+            </form>
+        </div>
+        <div class="container-fluid ">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+                <div class="navbar-header">
+                    <a href="hostservlet" class="navbar-brand">
+                        <div class="brand-text brand-big hidden-lg-down"><img src="../img/logo-white.png" alt="Logo" class="img-fluid"></div>
+                        <div class="brand-text brand-small"><img src="../img/logo-icon.png" alt="Logo" class="img-fluid"></div>
+                    </a>
+                    <a id="toggle-btn" href="#" class="menu-btn active">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+            <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                <li class="nav-item dropdown"><a id="profile" class="nav-link logout" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle" style="height: 30px; width: 30px;"></a>
+                    <ul aria-labelledby="profile" class="dropdown-menu profile">
+
+                        <li>
+                            <a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                <div class="msg-profile"> <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"></div>
+                                <div class="msg-body">
+                                    <h3 class="h5">{{user.username}}</h3>
+                                </div>
+                            </a>
+                            <hr>
+                        </li>
+
+                        <li>
+                            <a rel="nofollow" href="profile" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-user "></i>用户基本信息</div>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a rel="nofollow" href="logout" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-power-off"></i>注销</div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<!--====================================================
+                      PAGE CONTENT
+======================================================-->
+<div class="page-content d-flex align-items-stretch">
+    <!--***** SIDE NAVBAR *****-->
+    <nav class="side-navbar">
+        <div class="sidebar-header d-flex align-items-center" >
+            <div class="avatar">
+                <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"/>
+                <!--     "../img/avatar-1.jpg"           -->
+            </div>
+            <div class="title">
+                <h1 class="h4">{{user.username}}</h1>
+            </div>
+        </div>
+        <hr/>
+        <!-- Sidebar Navidation Menus-->
+        <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+        <ul class="list-unstyled">
+            <li><a href="hostservlet"><i class="icon-home"></i>主页</a></li>
+            <li><a href="#forms" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-building-o"></i>检测功能 </a>
+                <ul id="forms" class="collapse list-unstyled">
+                    <li><a href="lightcheck">开关/彩灯识别</a></li>
+                    <li><a href="clockcheck">数显/指针表识别</a></li>
+                </ul>
+            </li>
+            <li><a href="spellservlet"> <i class="fa fa-map-o"></i>图像拼接 </a></li>
+            <li><a href="#apps" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>数据库查询
+            </a>
+                <ul id="apps" class="collapse list-unstyled">
+                    <li><a href="lighttable">彩灯数据库</a></li>
+                    <li><a href="switchtable">开关数据库</a></li>
+                    <li><a href="numbertable">数显表数据库</a></li>
+                    <li><a href="pointtable">指针表数据库</a></li>
+                </ul>
+            </li>
+            <li><a href="#pages" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-file-o"></i>模型管理 </a>
+                <ul id="pages" class="collapse list-unstyled">
+                    <li><a href="weightSelf">我的模型</a></li>
+                    <li><a href="weightServlet">模型仓库</a></li>
+                    <li><a href="weightSelf">Gallery</a></li>
+                    <li><a href="login.html">Log In</a></li>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="search-result.html">Search Result</a></li>
+                    <li><a href="404.html">404</a></li>
+                </ul>
+            </li>
+            <li><a href="chart"> <i class="fa fa-bar-chart"></i>Chart </a></li>
+
+            <li><a href="weightServlet"> <i class="fa fa-map-o"></i>Maps </a></li>
+
+            <li><a href="check_light"> <i class="icon-grid"></i>Tables </a></li>
+            <li><a href="#elements" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-globe"></i>UI Elements
+            </a>
+                <ul id="elements" class="collapse list-unstyled">
+                    <li><a href="ui-buttons.html">Buttons</a></li>
+                    <li><a href="ui-cards.html">Cards</a></li>
+                    <li><a href="ui-progressbars.html">Progress Bar</a></li>
+                    <li><a href="ui-timeline.html">Timeline</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <span class="heading">Extras</span>
+        <ul class="list-unstyled">
+            <li class="active"><a href="emptyservlet"> <i class="icon-picture"></i>Demo</a></li>
+            <li><a href="logmanage"> <i class="icon-picture"></i>Log</a></li>
+        </ul>
+    </nav>
+    <div class="content-inner chart-cont">
+
+        <template>
+            <div class="block" align="center">
+                <el-carousel trigger="click" height="900px">
+                    <el-carousel-item v-for="(item,index) in src" :key="item">
+<!--                    :fit="fill"    -->
+                        <h3 class="small">{{ item }}</h3>
+                        <el-image
+                                style="width: 1200px; height: 600px"
+                                v-bind:src= item
+                                ></el-image>
+                    </el-carousel-item>
+                </el-carousel>
+            </div>
+        </template>
+
+    </div>
+
+
+</div>
+
+</div>
+
+<!--Global Javascript -->
+<script src="../js/jquery.min.js"></script>
+<script src="../js/popper/popper.min.js"></script>
+<script src="../js/tether.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/jquery.cookie.js"></script>
+<script src="../js/jquery.validate.min.js"></script>
+<script src="../js/chart.min.js"></script>
+<script src="../js/front.js"></script>
+<script src="../js/axios-0.18.0.js" ></script>
+<script src="../js/vue.js"></script>
+<script src="../element-ui/lib/index.js"></script>
+<!--<script src="../js/chart-page.js"></script>-->
+<link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+
+<style>
+    .box-card-1 {
+        background: #00aff0;
+    }
+    .box-card-2 {
+        background: #ebb563;
+    }
+    .box-card-3 {
+        background: #5daf34;
+    }
+    .text{
+        text-align:center;
+        font-size: 10px;
+    }
+
+</style>
+
+<script>
+    var local = window.location.host;
+    var ip = window.location.hostname;
+    var admin = new Vue({
+
+        el:"#menuApp",
+        data(){
+            return{
+                src:["http://" + ip + "/host/1.jpg",
+                    "http://" + ip + "/host/2.jpg",
+                    "http://" + ip + "/host/3.jpg",
+                    "http://" + ip + "/host/4.jpg"],
+                message:"",
+                user:[],
+                userList:[],
+                search_: {
+                    type: '',
+                    content: ''
+                },
+                deleteMes:{
+                    id:'',
+                    username:''
+                },
+                open:false,
+                thisWeekLogin:[],
+                weekOfYearNo:0,
+                form: {
+                    username: '',
+                    password: '',
+                    password0: '',
+                    avatarUrl: "http://" + ip + "/Avatar/avatar.jpg",
+                },
+                systemMes:{
+                    visitorVolume:'',
+                    userVolume:'',
+                    systemLogVolume:'',
+                    historyTime:[],
+                    logMessage:[],
+                    username:[],
+                    documentVolume:'',
+                    weekOfYear:''
+                }
+            }
+        },
+        methods:{
+            onSubmit(){
+                console.log(this.search_.content);
+                axios({
+                    method:"post",
+                    url:"http://" + local + "/manager/selectUserMessage",
+                    data: this.search_
+                }).then(resp =>{
+                    console.log(resp.data);
+                    this.userList = resp.data;
+                })
+            },
+            clear(){
+                axios({
+                    method:"get",
+                    url:"http://" + local + "/manager/userMessage"
+                }).then(resp =>{
+                    console.log(resp.data);
+                    this.userList = resp.data;
+                })
+            },
+            changAvatar(){
+                axios({
+                    method:"get",
+                    url:"http://" + local + "/user/createPicture"
+                }).then(resp =>{
+                    console.log(resp.data);
+                    this.form.avatarUrl = resp.data;
+                })
+            },
+            sure(){
+                if(this.form.username === ''){
+                    this.$message({message:'账号不得为空', type:'error', customClass:'new_z_index'})
+                    return;
+                }else if(this.form.password === ''){
+                    this.$message({message:'密码不得为空', type:'error', customClass:'new_z_index'});
+                    return;
+                }else if(this.form.password !== this.form.password0){
+                    this.$message({message:'两次密码输入不一致', type:'error', customClass:'new_z_index'});
+                    return;
+                }
+                this.add();
+            },
+            add(){
+                axios({
+                    method:"post",
+                    url:"http://" + local + "/user/manageRegister",
+                    data: this.form
+                }).then(resp =>{
+                    console.log(resp.data);
+                    this.message = resp.data;
+                    if(this.message === "注册成功"){
+                        // this.$message({message:this.message, type:'success', customClass:'new_z_index'});
+                        this.$alert('注册成功！', '提示', {
+                            confirmButtonText: '确定',
+                            callback: action => {
+                                this.$message({
+                                    type: 'success',
+                                    message: this.message,
+                                    customClass:'new_z_index'
+                                });
+                            }
+                        });
+                    }else if(this.message === "该用户名已存在"){
+                        this.$message({message:this.message, type:'warning', customClass:'new_z_index'});
+                    }
+                })
+            },
+            deleteOneMes(id,username){
+                console.log(id);
+                this.deleteMes.id = id;
+                this.deleteMes.username = username;
+                this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios({
+                        method: "post",
+                        url: "http://" + local + "/user/deleteServlet",
+                        data: this.deleteMes
+                    }).then (resp=>{
+                        this.message = resp.data;
+                        this.$message({type: 'success', message: this.message,customClass:'new_z_index'});
+                        this.clear();
+                    })
+                }).catch(() => {
+                    this.$message({type: 'info', message: '已取消删除',customClass:'new_z_index'});
+                });
+
+            },
+            updateSystemInfo(){
+                axios({
+                    method:"get",
+                    url:"http://" + local + "/manager/updateSystemInfo"
+                }).then(resp =>{
+                    console.log(resp.data);
+                    this.systemMes = resp.data;
+                    this.weekOfYearNo = parseInt(this.systemMes.weekOfYear);
+                    console.log(this.systemMes.historyTime[0]);
+                })
+            },
+            lastPage(){
+                this.weekOfYearNo --;
+                if(this.weekOfYearNo < 1) this.weekOfYearNo = 1;
+                else if(this.weekOfYearNo > parseInt(this.systemMes.weekOfYear)) this.weekOfYearNo = parseInt(this.systemMes.weekOfYear);
+                console.log(this.weekOfYearNo);
+                    axios({
+                    method:"post",
+                    url:"http://" + local + "/manager/turnPageTable",
+                    data:this.weekOfYearNo
+                }).then(resp =>{
+                    console.log(resp.data);
+                    this.thisWeekLogin = resp.data;
+                    this.showChart();
+                })
+            },
+            nextPage(){
+                this.weekOfYearNo ++;
+                if(this.weekOfYearNo < 1) this.weekOfYearNo = 1;
+                else if(this.weekOfYearNo > parseInt(this.systemMes.weekOfYear)) this.weekOfYearNo = parseInt(this.systemMes.weekOfYear);
+                console.log(this.weekOfYearNo);
+                axios({
+                    method:"post",
+                    url:"http://" + local + "/manager/turnPageTable",
+                    data:this.weekOfYearNo
+                }).then(resp =>{
+                    console.log(resp.data);
+                    this.thisWeekLogin = resp.data;
+                    this.showChart();
+                })
+            },
+            showChart(){
+                new Chart(document.getElementById("line-chart"), {
+                    type: 'line',
+                    data: {
+                        labels: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+                        datasets: [{
+                            data: this.thisWeekLogin,
+                            label: "登录次数",
+                            borderColor: "#3cba9f",//"#3e95cd"    "#8e5ea2"  "#3cba9f"
+                            fill: false
+                        }
+                        ]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: '机房信息管理系统每周登录情况'
+                        }
+                    }
+                });
+            }
+        },
+
+        mounted(){
+            this.clear();
+            this.updateSystemInfo();
+            axios({
+                method:"get",
+                url:"http://" + local + "/menu/hostdataservlet"
+            }).then(resp =>{
+                console.log(resp.data);
+                this.user = resp.data;
+            })
+            axios({
+                method:"get",
+                url:"http://" + local + "/manager/updateSystemWeek"
+            }).then(resp =>{
+                console.log(resp.data);
+                this.thisWeekLogin = resp.data;
+                this.showChart();
+            })
+        }
+    })
+</script>
+
+<style>
+    .new_z_index {
+        z-index:99000 !important;
+    }
+</style>
+</body>
+</html>

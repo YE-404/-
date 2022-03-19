@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-model="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="robots" content="all,follow"/>
+    <title></title>
+    <link rel="shortcut icon" href="img/favicon.ico"/>
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"/>
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../css/font-icon-style.css"/>
+    <link rel="stylesheet" href="../css/style.default.css" id="theme-stylesheet"/>
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="../css/timeline.css"/>
+</head>
+<body>
+<div id="menuApp">
+<!--====================================================M AIN NAVBAR======================================================-->
+<header class="header">
+    <nav class="navbar navbar-expand-lg ">
+        <div class="search-box">
+            <button class="dismiss"><i class="icon-close"></i></button>
+            <form id="searchForm" action="#" role="search">
+                <input type="search" placeholder="Search Now" class="form-control">
+            </form>
+        </div>
+        <div class="container-fluid ">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+                <div class="navbar-header">
+                    <a href="hostservlet" class="navbar-brand">
+                        <div class="brand-text brand-big hidden-lg-down"><img src="../img/logo-white.png" alt="Logo" class="img-fluid"></div>
+                        <div class="brand-text brand-small"><img src="../img/logo-icon.png" alt="Logo" class="img-fluid"></div>
+                    </a>
+                    <a id="toggle-btn" href="#" class="menu-btn active">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+            <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                <li class="nav-item dropdown"><a id="profile" class="nav-link logout" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle" style="height: 30px; width: 30px;"></a>
+                    <ul aria-labelledby="profile" class="dropdown-menu profile">
+
+                        <li>
+                            <a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                <div class="msg-profile"> <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"></div>
+                                <div class="msg-body">
+                                    <h3 class="h5">{{user.username}}</h3>
+                                </div>
+                            </a>
+                            <hr>
+                        </li>
+
+                        <li>
+                            <a rel="nofollow" href="profile" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-user "></i>用户基本信息</div>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a rel="nofollow" href="logout" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-power-off"></i>注销</div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<!--====================================================P AGE CONTENT======================================================-->
+<div class="page-content d-flex align-items-stretch" >
+    <!--***** SIDE NAVBAR *****-->
+    <nav class="side-navbar">
+        <div class="sidebar-header d-flex align-items-center" >
+            <div class="avatar">
+                <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"/>
+<!--     "../img/avatar-1.jpg"           -->
+            </div>
+            <div class="title">
+                <h1 class="h4">{{user.username}}</h1>
+            </div>
+        </div>
+        <hr/>
+        <!-- Sidebar Navidation Menus-->
+        <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+        <ul class="list-unstyled">
+            <li class="active"><a href="hostservlet"><i class="icon-home"></i>主页</a></li>
+            <li><a href="#forms" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-building-o"></i>检测功能 </a>
+                <ul id="forms" class="collapse list-unstyled">
+                    <li><a href="lightcheck">开关/彩灯识别</a></li>
+                    <li><a href="clockcheck">数显/指针表识别</a></li>
+                </ul>
+            </li>
+            <li><a href="spellservlet"> <i class="fa fa-map-o"></i>图像拼接 </a></li>
+            <li><a href="#apps" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>数据库查询
+            </a>
+                <ul id="apps" class="collapse list-unstyled">
+                    <li><a href="lighttable">彩灯数据库</a></li>
+                    <li><a href="switchtable">开关数据库</a></li>
+                    <li><a href="numbertable">数显表数据库</a></li>
+                    <li><a href="pointtable">指针表数据库</a></li>
+                </ul>
+            </li>
+            <li><a href="#pages" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-file-o"></i>模型管理 </a>
+                <ul id="pages" class="collapse list-unstyled">
+                    <li><a href="weightSelf">我的模型</a></li>
+                    <li><a href="weightServlet">模型仓库</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <span class="heading" id="managerInfo1">管理员功能</span>
+        <ul class="list-unstyled" id="managerInfo2" >
+            <li><a href="manageservlet"> <i class="fa fa-globe"></i>系统管理</a></li>
+            <li><a href="logmanage"> <i class="fa fa-file-o"></i>日志管理</a></li>
+        </ul>
+
+    </nav>
+    <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+    <div class="content-inner chart-cont">
+        <template>
+            <div class="block" align="center">
+                <h1>机房信息检测与管理系统</h1>
+                <el-carousel trigger="click" height="800px">
+                    <el-carousel-item v-for="(item,index) in src" :key="item">
+                        <!--                    :fit="fill"    -->
+                        <el-card :body-style="{ background: '#F0FFFF' }" class="box-card"  shadow="always">
+                            <h3><a href="#" title="">{{ introduce[index] }}</a></h3>
+                            <el-image
+                                    style="width: 1200px; height: 600px"
+                                    v-bind:src= item
+                            ></el-image>
+                        </el-card>
+
+                    </el-carousel-item>
+                </el-carousel>
+            </div>
+        </template>
+<!--        <template>-->
+<!--            <el-carousel :interval="4000" type="card" height="800px">-->
+<!--                <el-carousel-item v-for="item in 6" :key="item">-->
+<!--                    <h3 class="medium">{{ item }}</h3>-->
+<!--                </el-carousel-item>-->
+<!--            </el-carousel>-->
+<!--        </template>-->
+
+        <!--***** CONTENT *****-->
+<!--        <div class="row">-->
+<!--            &lt;!&ndash;***** TIMELINE-1 *****&ndash;&gt;-->
+<!--            <div class="main-timeline" id="timeline-1">-->
+<!--                <div class="timeline">-->
+<!--                    <div class="timeline-icon"></div>-->
+<!--                    <div class="timeline-content">-->
+<!--                        <span class="date">关于仪器检测</span>-->
+<!--                        <h5 class="title">可检测以下信息</h5>-->
+<!--                        <p class="description">1、开关状态. 2、指示灯状态. 3、数字仪表读数. 4、指针式仪表读数.5、二维码信息</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="timeline">-->
+<!--                    <div class="timeline-icon"></div>-->
+<!--                    <div class="timeline-content">-->
+<!--                        <span class="date">关于图像拼接</span>-->
+<!--                        <h5 class="title">使用说明如下</h5>-->
+<!--                        <p class="description">-->
+<!--                            在需要拍摄的物体过大时，可将其分块拍摄为若干张照片，每两张相邻照片保留一定重叠部分，将这些图片按顺序（从左往右或从上往下）传入即可拼接一张完整的长图。（本服务提供上下图像拼接和左右图像拼接两种方式）</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;***** TIMELINE-2 *****&ndash;&gt;-->
+<!--            <br/>-->
+<!--            <div class="main-timeline" id="timeline-2">-->
+<!--                <div class="timeline">-->
+<!--                    <div class="timeline-icon"></div>-->
+<!--                    <div class="timeline-content">-->
+<!--                        <span class="date">关于人脸识别</span>-->
+<!--                        <h5 class="title">可实现功能</h5>-->
+<!--                        <p class="description">用户将照片传入，本服务可标注出人脸并比对人脸库中的人脸信息，判断是否在此人信息是否在数据库中，如在册即给出此人身份信息</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="timeline">-->
+<!--                    <div class="timeline-icon"></div>-->
+<!--                    <div class="timeline-content">-->
+<!--                        <span class="date">关于添加模型</span>-->
+<!--                        <h5 class="title">使用说明如下</h5>-->
+<!--                        <p class="description">-->
+<!--                            可在服务中选择需要训练的类型，并选择“添加图片”与“添加xml”上传照片和xml文件（注意:图片名和xml名须一致，保证图片与对应的xml一一对应），选择开始训练即可，训练结束后将更新模型</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash;***** TIMELINE-3 *****&ndash;&gt;-->
+<!--        </div>-->
+    </div>
+</div>
+</div>
+<!--Global Javascript -->
+<script src="../js/jquery.min.js"></script>
+<script src="../js/popper/popper.min.js"></script>
+<script src="../js/tether.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/jquery.cookie.js"></script>
+<script src="../js/jquery.validate.min.js"></script>
+<script src="../js/chart.min.js"></script>
+<script src="../js/front.js"></script>
+<script src="../js/axios-0.18.0.js" ></script>
+<script src="../js/vue.js"></script>
+<script src="../element-ui/lib/index.js"></script>
+<!--<script src="../js/chart-page.js"></script>-->
+<link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+<script>
+    var local = window.location.host;
+    var ip = window.location.hostname;
+    new Vue({
+        el:"#menuApp",
+        data(){
+            return{
+                src:["http://" + ip + "/host/1.jpg",
+                    "http://" + ip + "/host/2.jpg",
+                    "http://" + ip + "/host/3.jpg",
+                    "http://" + ip + "/host/4.jpg"],
+                introduce:["开关与指示灯识别","仪表读数","图像拼接","模型管理"],
+                user:[]
+            }
+        },
+        mounted(){
+            axios({
+                method:"get",
+                url:"http://" + local + "/menu/hostdataservlet"
+            }).then(resp =>{
+                console.log(resp.data);
+                this.user = resp.data;
+                if(this.user.id === 15){
+                    $("#managerInfo1").show();
+                    $("#managerInfo2").show();
+                }else{
+                    $("#managerInfo1").hide();
+                    $("#managerInfo2").hide();
+                }
+            })
+        }
+    })
+</script>
+</body>
+</html>

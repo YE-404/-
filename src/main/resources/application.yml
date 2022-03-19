@@ -1,0 +1,62 @@
+spring:
+  datasource:
+    url: jdbc:mysql:///Mall
+    username: root
+    password: 111222
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+  application:
+    name: test-rabbitmq-producer
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: admin
+    virtualHost: /
+
+logging:
+  level:
+    com.myproject.systemdemo.mapper: debug
+
+#    thymeleaf:
+#      cache: false
+#      mode: LEGACYHTML5
+#      prefix: /WEB-INF/
+#      suffix: .html
+#      servlet:
+#        content-type: text/html
+
+server:
+  port: 8080
+  servlet:
+    session:
+      timeout: 1800
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.myproject.systemdemo.domain
+
+address: 127.0.0.1
+weightDirectory: /home/sy/IMAGE/weights/
+weightStore: /home/sy/IMAGE/weights/store/
+netWeightStore: http://127.0.0.1/weights/store/
+weightTempStore: /home/sy/IMAGE/weights/store_temp/
+userLog: /home/sy/IMAGE/log/user/
+masterDirectory: /home/sy/IMAGE/
+avatarDirectory: /home/sy/IMAGE/Avatar/
+systemInfo: /home/sy/IMAGE/log/system/
+darknetPath: /home/sy/IMAGE/darknet-master/scripts/VOCdevkit/
+spellPath: /home/sy/IMAGE/spells/
+#logging:
+#  config: classpath:mapper/*Mapper.xml
+
+
+
+
+
+

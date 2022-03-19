@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+ <head> 
+  <meta charset="utf-8" /> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+  <meta name="description" content="" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+  <meta name="robots" content="all,follow" /> 
+  <title></title> 
+  <link rel="shortcut icon" href="img/favicon.ico" /> 
+  <!-- global stylesheets --> 
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet" /> 
+  <link rel="stylesheet" href="../css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../css/font-icon-style.css" />
+  <link rel="stylesheet" href="../css/style.default.css" id="theme-stylesheet" />
+  <!-- Core stylesheets --> 
+  <link rel="stylesheet" href="../css/form.css" />
+  <link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+
+     <style>
+         .el-table .warning-row {
+             background: oldlace;
+         }
+
+         .el-table .success-row {
+             background: #f0f9eb;
+         }
+     </style>
+
+ </head> 
+ <body>
+ <div id="menuApp">
+  <!--====================================================
+                     MAIN NAVBAR
+======================================================-->
+  <header class="header">
+      <nav class="navbar navbar-expand-lg ">
+          <div class="search-box">
+              <button class="dismiss"><i class="icon-close"></i></button>
+              <form id="searchForm" action="#" role="search">
+                  <input type="search" placeholder="Search Now" class="form-control">
+              </form>
+          </div>
+          <div class="container-fluid ">
+              <div class="navbar-holder d-flex align-items-center justify-content-between">
+                  <div class="navbar-header">
+                      <a href="hostservlet" class="navbar-brand">
+                          <div class="brand-text brand-big hidden-lg-down"><img src="../img/logo-white.png" alt="Logo" class="img-fluid"></div>
+                          <div class="brand-text brand-small"><img src="../img/logo-icon.png" alt="Logo" class="img-fluid"></div>
+                      </a>
+                      <a id="toggle-btn" href="#" class="menu-btn active">
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                      </a>
+                  </div>
+              </div>
+              <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                  <li class="nav-item dropdown"><a id="profile" class="nav-link logout" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle" style="height: 30px; width: 30px;"></a>
+                      <ul aria-labelledby="profile" class="dropdown-menu profile">
+
+                          <li>
+                              <a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                  <div class="msg-profile"> <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"></div>
+                                  <div class="msg-body">
+                                      <h3 class="h5">{{user.username}}</h3>
+                                  </div>
+                              </a>
+                              <hr>
+                          </li>
+
+                          <li>
+                              <a rel="nofollow" href="profile" class="dropdown-item">
+                                  <div class="notification">
+                                      <div class="notification-content"><i class="fa fa-user "></i>用户基本信息</div>
+                                  </div>
+                              </a>
+                          </li>
+
+                          <li>
+                              <a rel="nofollow" href="logout" class="dropdown-item">
+                                  <div class="notification">
+                                      <div class="notification-content"><i class="fa fa-power-off"></i>注销</div>
+                                  </div>
+                              </a>
+                          </li>
+                      </ul>
+                  </li>
+              </ul>
+          </div>
+      </nav>
+  </header>
+  <!--====================================================
+                    PAGE CONTENT
+======================================================--> 
+  <div class="page-content d-flex align-items-stretch"> 
+   <!--***** SIDE NAVBAR *****-->
+      <nav class="side-navbar">
+          <div class="sidebar-header d-flex align-items-center" >
+              <div class="avatar">
+                  <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"/>
+                  <!--     "../img/avatar-1.jpg"           -->
+              </div>
+              <div class="title">
+                  <h1 class="h4">{{user.username}}</h1>
+              </div>
+          </div>
+          <hr/>
+          <!-- Sidebar Navidation Menus-->
+          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+          <ul class="list-unstyled">
+              <li><a href="hostservlet"><i class="icon-home"></i>主页</a></li>
+              <li><a href="#forms" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-building-o"></i>检测功能 </a>
+                  <ul id="forms" class="collapse list-unstyled">
+                      <li ><a href="lightcheck">开关/彩灯识别</a></li>
+                      <li class="active"><a href="clockcheck">数显/指针表识别</a></li>
+                  </ul>
+              </li>
+              <li><a href="spellservlet"> <i class="fa fa-map-o"></i>图像拼接 </a></li>
+              <li><a href="#apps" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>数据库查询
+              </a>
+                  <ul id="apps" class="collapse list-unstyled">
+                      <li><a href="lighttable">彩灯数据库</a></li>
+                      <li><a href="switchtable">开关数据库</a></li>
+                      <li><a href="numbertable">数显表数据库</a></li>
+                      <li><a href="pointtable">指针表数据库</a></li>
+                  </ul>
+              </li>
+              <li><a href="#pages" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-file-o"></i>模型管理 </a>
+                  <ul id="pages" class="collapse list-unstyled">
+                      <li><a href="weightSelf">我的模型</a></li>
+                      <li><a href="weightServlet">模型仓库</a></li>
+                  </ul>
+              </li>
+          </ul>
+
+          <span class="heading" id="managerInfo1">管理员功能</span>
+          <ul class="list-unstyled" id="managerInfo2" >
+              <li><a href="manageservlet"> <i class="fa fa-globe"></i>系统管理</a></li>
+              <li><a href="logmanage"> <i class="fa fa-file-o"></i>日志管理</a></li>
+          </ul>
+      </nav>
+   <div class="content-inner form-cont" id="app">
+    <div class="row"> 
+     <div class="col-md-12">
+      <!--***** BASIC FORM *****--> 
+      <div class="card form" id="form1"> 
+       <div class="card-header"> 
+        <h3>指示灯识别</h3> 
+       </div> 
+       <br /> 
+       <form action="http://localhost:8080/light/analyzeLight" enctype='multipart/form-data' method='POST' id="fileForm">
+
+        <div class="row"> 
+         <div class="col-md-6">
+          <div class="form-group"> 
+           <label>&nbsp 模型选择</label>
+           <select class="form-control" id="exampleSelect" name="exampleSelect"  v-model="check.exampleSelect">
+               <option value="new">new</option>
+               <option value="old">old</option>
+           </select>
+          </div>
+
+          <fieldset class="form-group"> 
+           <legend>&nbsp 本次识别结果是否上传至数据库</legend> 
+           <div class="form-check"> 
+            &nbsp <label class="form-check-label">
+               <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" v-model="check.optionsRadios" value="yes"/> 是 </label>
+           </div> 
+           <div class="form-check"> 
+            &nbsp <label class="form-check-label">
+               <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" v-model="check.optionsRadios" value="no"/> 否 </label>
+           </div> 
+          </fieldset> 
+          </div>
+
+         <div class="col-md-6">
+             <template>
+                 筛选数字仪表状态: <el-checkbox :indeterminate="isIndeterminate" v-model="checkNumberAll" @change="handleCheckNumberAllChange">全选</el-checkbox>
+                 <div style="margin: 15px 0;"></div>
+                 <el-checkbox-group v-model="check.checkedNumbers" @change="handleCheckedNumbersChange">
+                     <el-checkbox v-for="(number, index) in numberKey" :label="number" :key="number">{{numbers[index]}}</el-checkbox>
+                 </el-checkbox-group>
+             </template>
+             <hr/>
+             <template>
+                 筛选指针仪表状态: <el-checkbox :indeterminate="isIndeterminate" v-model="checkPointAll" @change="handleCheckPointAllChange">全选</el-checkbox>
+                 <div style="margin: 15px 0;"></div>
+                 <el-checkbox-group v-model="check.checkedPoints" @change="handleCheckedPointsChange">
+                     <el-checkbox v-for="(i, index) in pointKey" :label="i" :key="i">{{points[index]}}</el-checkbox>
+                 </el-checkbox-group>
+             </template>
+             <hr/>
+          <br/>
+          <div class="form-group"> 
+           <label for="file">选择图片</label>
+           <input type="file" name="file" class="form-control-file" id="file" aria-describedby="fileHelp" enctype="multipart/form-data" />
+<!--      v-model="file"        -->
+           <small id="fileHelp" class="form-text text-muted"></small> 
+          </div> 
+         </div>
+
+         <div class="col-md-6">
+<!--          &nbsp <input type="submit" class="btn btn-general btn-blue mr-2" @click="check"></input>-->
+             <input type="button" class="btn btn-general btn-blue mr-2" @click="checkData" value="检测"></input>
+        </div>
+
+      </div>
+       </form>
+      </div>
+     </div>
+    </div>
+
+          <template>
+              <el-table
+                      :data="numberResult"
+                      style="width: 100%"
+                      :row-class-name="tableRowClassName">
+                  <el-table-column
+                          type="index"
+                          width="70">
+                  </el-table-column>
+                  <el-table-column
+                          prop="class_"
+                          label="类型"
+                          align="center">
+                  </el-table-column>
+                  <el-table-column
+                          prop="result"
+                          label="读数"
+                          align="center">
+                  </el-table-column>
+              </el-table>
+          </template>
+
+       <div class="demo-image__placeholder">
+           <div class="block">
+<!--               <span class="demonstration">自定义</span>-->
+               <el-image :src="src">
+                   <div slot="placeholder" class="image-slot">
+                       加载中<span class="dot">...</span>
+                   </div>
+               </el-image>
+           </div>
+       </div>
+
+   </div>
+
+  </div>
+ </div>
+  <!--Global Javascript --> 
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/popper/popper.min.js"></script>
+  <script src="../js/tether.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script src="../js/jquery.cookie.js"></script>
+  <script src="../js/jquery.validate.min.js"></script>
+  <script src="../js/chart.min.js"></script>
+  <script src="../js/front.js"></script>
+  <script src="../js/axios-0.18.0.js" ></script>
+  <script src="../js/vue.js"></script>
+  <script src="../element-ui/lib/index.js"></script>
+
+  <!--Core Javascript -->
+ <style>
+     .upload-demo{
+         display: inline-block;
+     }
+     .new_z_index {
+         z-index:99000 !important;
+     }
+ </style>
+
+
+  <script>
+      var local = window.location.host;
+      var ip = window.location.hostname;
+      const numberOptions = ['ammeter', 'voltmeter'];
+      const pointOptions = ['ammeter', 'voltmeter'];
+      var local = window.location.host;
+      var chat =new Vue({
+          el:"#menuApp",
+          data(){
+              return{
+                  src:"",
+                  user:[],
+                  numberResult:[],
+                  check:{
+                      optionsRadios:"yes",
+                      status:"all",
+                      exampleSelect:"old",
+                      checkedNumbers:[],
+                      checkedPoints:[]
+
+                  },
+                  checkNumberAll: false,
+                  checkPointAll: false,
+                  numberKey:['ammeter', 'voltmeter'],
+                  numbers: ['电流表', '电压表'],
+                  pointKey:['ammeter', 'voltmeter'],
+                  points: ['电流表', '电压表'],
+                  isIndeterminate: true
+              }
+          },
+          methods:{
+              handleCheckNumberAllChange(val) {
+                  this.check.checkedNumbers = val ? numberOptions : [];
+                  this.isIndeterminate = false;
+              },
+              handleCheckedNumbersChange(value) {
+                  let checkedCount = value.length;
+                  this.checkNumberAll = checkedCount === this.numbers.length;
+                  this.isIndeterminate = checkedCount > 0 && checkedCount < this.numbers.length;
+              },
+              handleCheckPointAllChange(val) {
+                  this.check.checkedPoints = val ? pointOptions : [];
+                  this.isIndeterminate = false;
+              },
+              handleCheckedPointsChange(value) {
+                  let checkedCount = value.length;
+                  this.checkPointAll = checkedCount === this.points.length;
+                  this.isIndeterminate = checkedCount > 0 && checkedCount < this.points.length;
+              },
+
+
+               checkData(){
+                  console.log(this.check.checkedPoints);
+                   var formData = new FormData();
+                   formData.append("file",$("#file")[0].files[0]);
+                   formData.append("exampleSelect",this.check.exampleSelect);
+                   formData.append("optionsRadios",this.check.optionsRadios);
+                   formData.append("status",this.check.status);
+                   formData.append("checkedNumbers",this.check.checkedNumbers);
+                   formData.append("checkedPoints",this.check.checkedPoints);
+                   console.log(this.check.exampleSelect);
+                  axios({
+                      method: "post",
+                      url: "http://" + local + "/number/analyzeClock",
+                      data:formData,
+                      processData: false,
+                      contentType: false
+                  }).then(resp => {
+                      console.log(resp.data);
+                      if(resp.data === "lackWeight"){
+                          this.$message({type: 'error', message: "检测功能必须部署并启用Indicator类和Inside类两个模型",customClass:'new_z_index'});
+                      }else if(resp.data === "noFile"){
+                          this.$message({type: 'error', message: "上传文件为空",customClass:'new_z_index'});
+                      }else{
+                          this.numberResult = resp.data;
+                          this.src = this.numberResult[0]["saveUrl"].replace("127.0.0.1",ip);
+                          console.log(this.src );
+                      }
+                  })
+               },
+              tableRowClassName({row, rowIndex}) { //变色
+                  if (rowIndex === 1) {
+                      return 'warning-row';
+                  } else if (rowIndex === 3) {
+                      return 'success-row';
+                  }
+                  return '';
+              }
+          },
+          mounted(){
+              var _this = this;
+              axios({
+                  method:"get",
+                  url:"http://" + local + "/menu/hostdataservlet"
+              }).then(resp =>{
+                  console.log(resp.data);
+                  this.user = resp.data;
+                  if(this.user.id === 15){
+                      $("#managerInfo1").show();
+                      $("#managerInfo2").show();
+                  }else{
+                      $("#managerInfo1").hide();
+                      $("#managerInfo2").hide();
+                  }
+              })
+          }
+      })
+  </script>
+ </body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="robots" content="all,follow"/>
+    <title></title>
+    <link rel="shortcut icon" href="img/favicon.ico"/>
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"/>
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../css/font-icon-style.css"/>
+    <link rel="stylesheet" href="../css/style.default.css" id="theme-stylesheet"/>
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="../css/form.css"/>
+    <link rel="stylesheet" href="../css/card.css"/>
+
+    <style>
+        .el-table .warning-row {
+            background: oldlace;
+        }
+
+        .el-table .success-row {
+            background: #f0f9eb;
+        }
+    </style>
+
+
+</head>
+<body>
+<div id="menuApp">
+<!--====================================================
+                   MAIN NAVBAR
+======================================================-->
+<header class="header">
+    <nav class="navbar navbar-expand-lg ">
+        <div class="search-box">
+            <button class="dismiss"><i class="icon-close"></i></button>
+            <form id="searchForm" action="#" role="search">
+                <input type="search" placeholder="Search Now" class="form-control">
+            </form>
+        </div>
+        <div class="container-fluid ">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+                <div class="navbar-header">
+                    <a href="hostservlet" class="navbar-brand">
+                        <div class="brand-text brand-big hidden-lg-down"><img src="../img/logo-white.png" alt="Logo" class="img-fluid"></div>
+                        <div class="brand-text brand-small"><img src="../img/logo-icon.png" alt="Logo" class="img-fluid"></div>
+                    </a>
+                    <a id="toggle-btn" href="#" class="menu-btn active">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+            <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                <li class="nav-item dropdown"><a id="profile" class="nav-link logout" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle" style="height: 30px; width: 30px;"></a>
+                    <ul aria-labelledby="profile" class="dropdown-menu profile">
+
+                        <li>
+                            <a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                <div class="msg-profile"> <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"></div>
+                                <div class="msg-body">
+                                    <h3 class="h5">{{user.username}}</h3>
+                                </div>
+                            </a>
+                            <hr>
+                        </li>
+
+                        <li>
+                            <a rel="nofollow" href="profile" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-user "></i>用户基本信息</div>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a rel="nofollow" href="logout" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-power-off"></i>注销</div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<!--====================================================
+                  PAGE CONTENT
+======================================================-->
+<div class="page-content d-flex align-items-stretch">
+    <!--***** SIDE NAVBAR *****-->
+    <nav class="side-navbar">
+        <div class="sidebar-header d-flex align-items-center" >
+            <div class="avatar">
+                <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"/>
+                <!--     "../img/avatar-1.jpg"           -->
+            </div>
+            <div class="title">
+                <h1 class="h4">{{user.username}}</h1>
+            </div>
+        </div>
+        <hr/>
+        <!-- Sidebar Navidation Menus-->
+        <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+        <ul class="list-unstyled">
+            <li><a href="hostservlet"><i class="icon-home"></i>主页</a></li>
+            <li><a href="#forms" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-building-o"></i>检测功能 </a>
+                <ul id="forms" class="collapse list-unstyled">
+                    <li><a href="lightcheck">开关/彩灯识别</a></li>
+                    <li><a href="clockcheck">数显/指针表识别</a></li>
+                </ul>
+            </li>
+            <li><a href="spellservlet"> <i class="fa fa-map-o"></i>图像拼接 </a></li>
+            <li><a href="#apps" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>数据库查询
+            </a>
+                <ul id="apps" class="collapse list-unstyled">
+                    <li><a href="lighttable">彩灯数据库</a></li>
+                    <li class="active"><a href="switchtable">开关数据库</a></li>
+                    <li><a href="numbertable">数显表数据库</a></li>
+                    <li><a href="pointtable">指针表数据库</a></li>
+                </ul>
+            </li>
+            <li><a href="#pages" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-file-o"></i>模型管理 </a>
+                <ul id="pages" class="collapse list-unstyled">
+                    <li><a href="weightSelf">我的模型</a></li>
+                    <li><a href="weightServlet">模型仓库</a></li>
+                </ul>
+            </li>
+        </ul>
+        <span class="heading" id="managerInfo1">管理员功能</span>
+        <ul class="list-unstyled" id="managerInfo2" >
+            <li><a href="manageservlet"> <i class="fa fa-globe"></i>系统管理</a></li>
+            <li><a href="logmanage"> <i class="fa fa-file-o"></i>日志管理</a></li>
+        </ul>
+    </nav>
+    <div class="content-inner form-cont">
+        <div class="row">
+            <div class="col-md-12" id="form">
+                <!--***** BASIC FORM *****-->
+                <el-form :inline="true" :model="search_" class="demo-form-inline">
+                    <el-form-item label="搜索类型">
+                        <el-select v-model="search_.type" placeholder="搜索类型">
+                            <el-option label="id" value="id"></el-option>
+                            <el-option label="class" value="class"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="搜索内容">
+                        <el-input v-model="search_.content" placeholder="搜索内容"></el-input>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" @click="onSubmit">查询</el-button>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="success" @click="clear">清空</el-button>
+                    </el-form-item>
+                </el-form>
+
+                <el-row>
+                    <el-button type="danger" plain @click="deleteIds">批量删除</el-button>
+                </el-row>
+
+
+                <template>
+                    <el-table
+                            :data="switchs"
+                            style="width: 100%"
+                            :row-class-name="tableRowClassName"
+                            @selection-change="handleSelectionChange">
+                        <el-table-column
+                                type="selection"
+                                width="55">
+                        </el-table-column>
+                        <el-table-column
+                                type="index"
+                                width="50">
+                        </el-table-column>
+                        <el-table-column
+                                prop="id"
+                                align="center"
+                                label="id">
+                        </el-table-column>
+                        <el-table-column
+                                prop="class_"
+                                align="center"
+                                label="class">
+                        </el-table-column>
+                        <el-table-column
+                                prop="time"
+                                align="center"
+                                label="time">
+                        </el-table-column>
+                        <el-table-column
+                                align="center"
+                                label="opration">
+                            <template slot-scope="scope">
+                                <el-row>
+                                    <el-button type="danger" @click="deleteOneMes(scope.row.id)">删除</el-button>
+                                </el-row>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </template>
+
+                <el-pagination
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange"
+                        :current-page="currentPage"
+                        :page-sizes="[5, 10, 15, 20]"
+                        :page-size="5"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="totalCount">
+                </el-pagination>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+                <!--Global Javascript -->
+                <script src="../js/jquery.min.js"></script>
+                <script src="../js/popper/popper.min.js"></script>
+                <script src="../js/tether.min.js"></script>
+                <script src="../js/bootstrap.min.js"></script>
+                <script src="../js/jquery.cookie.js"></script>
+                <script src="../js/jquery.validate.min.js"></script>
+                <script src="../js/chart.min.js"></script>
+                <script src="../js/front.js"></script>
+                <script src="../js/axios-0.18.0.js" ></script>
+                <script src="../js/vue.js"></script>
+                <script src="../element-ui/lib/index.js"></script>
+                <link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+                <!--Core Javascript -->
+
+<script>
+    var local = window.location.host;
+    new Vue({
+        el:"#menuApp",
+        data(){
+            return{
+                user:[],
+                switchs:[],
+                multipleSelection: [],
+                search_: {
+                    type: '',
+                    content: ''
+                },
+                selectedIds:[],
+                totalCount:100,
+                pageSize:5,
+                currentPage: 1
+            }
+        },
+        methods: {
+            tableRowClassName({row, rowIndex}) { //变色
+                if (rowIndex === 1) {
+                    return 'warning-row';
+                } else if (rowIndex === 3) {
+                    return 'success-row';
+                }
+                return '';
+            },
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
+            },
+            onSubmit() {                     //搜索
+                //var _this = this;
+                console.log(this.search_)
+                this.selectALl();
+            },
+            handleSizeChange(val) {            //分页
+                this.pageSize = val;
+                this.selectALl();
+                //console.log(`每页 ${val} 条`);
+            },
+            handleCurrentChange(val) {
+                this.currentPage = val;
+                this.selectALl();
+                //.log(`当前页: ${val}`);
+            },
+
+            //
+            deleteOneMes(id) {
+                console.log(id);
+                var _this = this;
+                this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios({
+                        method: "post",
+                        url: "http://" + local + "/switch/deleteServlet",
+                        data: id
+                    }).then(function (resp) {
+                        _this.switchs = resp.data;
+                        _this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        });
+                        _this.selectALl();
+                    })
+                }).catch(() => {
+                    _this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+            deleteIds() {
+                for (let i = 0; i < this.multipleSelection.length; i++) {
+                    let selectionElement = this.multipleSelection[i];
+                    this.selectedIds[i] = selectionElement.id;
+                }
+                var _this = this;
+                this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios({
+                        method: "post",
+                        url: "http://" + local + "/switch/deleteIds",
+                        data: _this.selectedIds
+                    }).then(function (resp) {
+                        if (resp.data == "succeed") {
+                            _this.$message({
+                                type: 'success',
+                                message: '删除成功'
+                            });
+                            _this.selectALl();
+                        }
+                    })
+                }).catch(() => {
+                    _this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+            selectALl() {
+                var maxPageCount = Math.ceil(this.totalCount/this.pageSize)
+                if(this.currentPage>maxPageCount){
+                    this.currentPage = maxPageCount;
+                }
+                console.log(this.currentPage);
+                console.log(this.pageSize);
+                console.log(this.totalCount);
+                axios({
+                    method: "post",
+                    url: "http://" + local + "/switch/selectByPageAndCondition?currentPage=" + this.currentPage + "&pageSize=" + this.pageSize,
+                    data:this.search_
+                }).then(resp => {
+                    this.switchs = resp.data.rows;
+                    this.totalCount = resp.data.totalCount;
+                    var maxPageCount = Math.ceil(this.totalCount/this.pageSize)
+                    if(this.currentPage>maxPageCount){
+                        console.log("in");
+                        this.currentPage = maxPageCount;
+                        this.show();
+                    }
+                })
+            },
+            show(){
+                axios({
+                    method: "post",
+                    url: "http://" + local + "/number/selectByPageAndCondition?currentPage=" + this.currentPage + "&pageSize=" + this.pageSize,
+                    data:this.search_
+                }).then(resp => {
+                    this.lights = resp.data.rows;
+                    this.totalCount = resp.data.totalCount;
+                })
+            },
+            clear() {
+                this.search_.content = null;
+                this.search_.type = null;
+                axios({
+                    method: "post",
+                    url: "http://" + local + "/switch/selectByPageAndCondition?currentPage=" + this.currentPage + "&pageSize=" + this.pageSize,
+                    data:this.search_
+                }).then(resp => {
+                    this.switchs = resp.data.rows;
+                    this.totalCount = resp.data.totalCount;
+                })
+            }
+        },
+
+        mounted(){
+            var _this = this;
+            axios({
+                method:"get",
+                url:"http://" + local + "/switch/selectByPage?currentPage=1&pageSize="+_this.pageSize
+            }).then(function(resp){
+                _this.switchs = resp.data.rows;
+                _this.totalCount = resp.data.totalCount;
+            })
+            axios({
+                method:"get",
+                url:"http://" + local + "/menu/hostdataservlet"
+            }).then(resp =>{
+                console.log(resp.data);
+                this.user = resp.data;
+                if(this.user.id === 15){
+                    $("#managerInfo1").show();
+                    $("#managerInfo2").show();
+                }else{
+                    $("#managerInfo1").hide();
+                    $("#managerInfo2").hide();
+                }
+
+            })
+        }
+    })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myproject.systemdemo.mapper.UserMapper">
+<!--  com.myproject.springbootmybatis.domain.  -->
+    <resultMap id="userResultMap" type="com.myproject.systemdemo.domain.User">
+        <result column="register_time" property="registerTime"></result>
+        <result column="avatar_url" property="avatarUrl"></result>
+        <result column="login_times" property="loginTimes"></result>
+        <result column="train_status" property="trainStatus"></result>
+    </resultMap>
+
+    <resultMap id="indicatorResultMap" type="com.myproject.systemdemo.domain.Indicator">
+        <result column="class" property="class_"></result>
+    </resultMap>
+
+    <resultMap id="LogMap" type="com.myproject.systemdemo.domain.Log">
+        <result column="user_id" property="userId"></result>
+        <result column="create_date" property="createDate"></result>
+        <result column="change_date" property="changeDate"></result>
+        <result column="file_size" property="fileSize"></result>
+        <result column="save_path" property="savePath"></result>
+
+    </resultMap>
+
+    <resultMap id="SystemMap" type="com.myproject.systemdemo.domain.SystemMes">
+        <result column="visitor_volume" property="visitorVolume"></result>
+        <result column="user_volume" property="userVolume"></result>
+        <result column="system_log_volume" property="systemLogVolume"></result>
+    </resultMap>
+
+
+<!--    <select id="findAll" resultType="user">-->
+<!--        select * from users;-->
+<!--    </select>-->
+    <delete id="deleteIds" >
+        delete from ${type} where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+
+    <select id="selectWeightMesByPageAndCondition" resultType="com.myproject.systemdemo.domain.WeightMes">
+        select * from ${type}
+        <where>
+            <if test="search.type != null and search.type !='' and search.type != 'null'">
+                <if test="search.type == 'type'">
+                    category like #{search.content}
+                </if>
+            </if>
+        </where>
+        limit #{begin} , #{size}
+    </select>
+
+
+    <select id="selectLogByPageAndCondition" resultMap="LogMap">
+        select * from ${type}
+        <where>
+            <if test="search.type != null and search.type !=''">
+                <if test="search.type == 'username'">
+                    username like #{search.content}
+                </if>
+                <if test="search.type == 'userId'">
+                    user_id = #{search.content}
+                </if>
+            </if>
+        </where>
+        limit #{begin} , #{size}
+    </select>
+
+    <select id="selectByPageAndCondition" resultMap="indicatorResultMap">
+        select * from ${type}
+        <where>
+            <if test="search.type != null and search.type !=''">
+                <if test="search.type == 'class'">
+                    class like #{search.content}
+                </if>
+                <if test="search.type == 'id'">
+                    id = #{search.content}
+                </if>
+            </if>
+        </where>
+        limit #{begin} , #{size}
+    </select>
+
+
+
+    <select id="selectTotalCountByCondition" resultType="java.lang.Integer">
+        select count(*) from ${type}
+        <where>
+            <if test="search.type != null and search.type !=''">
+                <if test="search.type == 'class'">
+                    class like #{search.content}
+                </if>
+                <if test="search.type == 'username'">
+                    username like #{search.content}
+                </if>
+                <if test="search.type == 'type'">
+                    category like #{search.content}
+                </if>
+                <if test="search.type == 'id'">
+                    id = #{search.content}
+                </if>
+                <if test="search.type == 'userId'">
+                    user_id = #{search.content}
+                </if>
+            </if>
+        </where>
+
+    </select>
+
+</mapper>

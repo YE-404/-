@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+ <head> 
+  <meta charset="utf-8" /> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+  <meta name="description" content="" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+  <meta name="robots" content="all,follow" /> 
+  <title></title> 
+  <link rel="shortcut icon" href="img/favicon.ico" /> 
+  <!-- global stylesheets --> 
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet" /> 
+  <link rel="stylesheet" href="../css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../css/font-icon-style.css" />
+  <link rel="stylesheet" href="../css/style.default.css" id="theme-stylesheet" />
+  <!-- Core stylesheets --> 
+  <link rel="stylesheet" href="../css/form.css" />
+ </head> 
+ <body>
+ <div id="menuApp">
+  <!--====================================================
+                     MAIN NAVBAR
+======================================================-->
+  <header class="header">
+   <nav class="navbar navbar-expand-lg ">
+    <div class="search-box">
+     <button class="dismiss"><i class="icon-close"></i></button>
+     <form id="searchForm" action="#" role="search">
+      <input type="search" placeholder="Search Now" class="form-control">
+     </form>
+    </div>
+    <div class="container-fluid ">
+     <div class="navbar-holder d-flex align-items-center justify-content-between">
+      <div class="navbar-header">
+       <a href="hostservlet" class="navbar-brand">
+        <div class="brand-text brand-big hidden-lg-down"><img src="../img/logo-white.png" alt="Logo" class="img-fluid"></div>
+        <div class="brand-text brand-small"><img src="../img/logo-icon.png" alt="Logo" class="img-fluid"></div>
+       </a>
+       <a id="toggle-btn" href="#" class="menu-btn active">
+        <span></span>
+        <span></span>
+        <span></span>
+       </a>
+      </div>
+     </div>
+     <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+      <li class="nav-item dropdown"><a id="profile" class="nav-link logout" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle" style="height: 30px; width: 30px;"></a>
+       <ul aria-labelledby="profile" class="dropdown-menu profile">
+
+        <li>
+         <a rel="nofollow" href="#" class="dropdown-item d-flex">
+          <div class="msg-profile"> <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"></div>
+          <div class="msg-body">
+           <h3 class="h5">{{user.username}}</h3>
+          </div>
+         </a>
+         <hr>
+        </li>
+
+        <li>
+         <a rel="nofollow" href="profile" class="dropdown-item">
+          <div class="notification">
+           <div class="notification-content"><i class="fa fa-user "></i>用户基本信息</div>
+          </div>
+         </a>
+        </li>
+
+        <li>
+         <a rel="nofollow" href="logout" class="dropdown-item">
+          <div class="notification">
+           <div class="notification-content"><i class="fa fa-power-off"></i>注销</div>
+          </div>
+         </a>
+        </li>
+       </ul>
+      </li>
+     </ul>
+    </div>
+   </nav>
+  </header>
+  <!--====================================================
+                    PAGE CONTENT
+======================================================--> 
+  <div class="page-content d-flex align-items-stretch"> 
+   <!--***** SIDE NAVBAR *****-->
+   <nav class="side-navbar">
+    <div class="sidebar-header d-flex align-items-center" >
+     <div class="avatar">
+      <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"/>
+      <!--     "../img/avatar-1.jpg"           -->
+     </div>
+     <div class="title">
+      <h1 class="h4">{{user.username}}</h1>
+     </div>
+    </div>
+    <hr/>
+    <!-- Sidebar Navidation Menus-->
+    <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+    <ul class="list-unstyled">
+     <li><a href="hostservlet"><i class="icon-home"></i>主页</a></li>
+     <li><a href="#forms" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-building-o"></i>检测功能 </a>
+      <ul id="forms" class="collapse list-unstyled">
+       <li><a href="lightcheck">开关/彩灯识别</a></li>
+       <li><a href="clockcheck">数显/指针表识别</a></li>
+      </ul>
+     </li>
+     <li><a href="spellservlet"> <i class="fa fa-map-o"></i>图像拼接 </a></li>
+     <li><a href="#apps" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>数据库查询
+     </a>
+      <ul id="apps" class="collapse list-unstyled">
+       <li><a href="lighttable">彩灯数据库</a></li>
+       <li><a href="switchtable">开关数据库</a></li>
+       <li><a href="numbertable">数显表数据库</a></li>
+       <li><a href="pointtable">指针表数据库</a></li>
+      </ul>
+     </li>
+     <li><a href="#pages" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-file-o"></i>模型管理 </a>
+      <ul id="pages" class="collapse list-unstyled">
+       <li><a href="weightSelf">我的模型</a></li>
+       <li class="active"><a href="weightServlet">模型仓库</a></li>
+      </ul>
+     </li>
+    </ul>
+    <span class="heading" id="managerInfo1">管理员功能</span>
+    <ul class="list-unstyled" id="managerInfo2" >
+     <li><a href="manageservlet"> <i class="fa fa-globe"></i>系统管理</a></li>
+     <li><a href="logmanage"> <i class="fa fa-file-o"></i>日志管理</a></li>
+    </ul>
+   </nav>
+
+
+   <div class="content-inner form-cont">
+   <el-card class="box-card" style="width: 1400px">
+
+    <el-form :inline="true" :model="search_" class="demo-form-inline">
+
+     <el-form-item label="搜索内容">
+      <el-input v-model="search_.content" placeholder="搜索内容"></el-input>
+     </el-form-item>
+
+      <el-button type="primary" @click="onSubmit">查询</el-button>
+
+      <el-button type="success" @click="clear">清空</el-button>
+
+     <el-button type="warning" @click="open=true">新增</el-button>
+
+     <el-dialog title="新增权重文件" :visible.sync="open">
+      <el-form :model="weight"  label-width="80px" size="small" align="center" >
+       <br/><br/>
+       <el-form-item label="识别类型" >
+        <div class="form-check">
+         <label class="form-check-label"> <input type="radio" class="form-check-input" name="optionsRadios" v-model="weight.category" id="optionsRadios1" value="Indicator" checked="" /> 元器件 </label>&nbsp;&nbsp;&nbsp;&nbsp;
+         <label class="form-check-label"> <input type="radio" class="form-check-input" name="optionsRadios" v-model="weight.category" id="optionsRadios2" value="Inside" checked="" /> 数字、指针等 </label>
+        </div>
+       </el-form-item>
+       <br/>
+       <el-form-item label="文件描述" >
+        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="weight.message" maxlength="90" show-word-limit></el-input>
+
+       </el-form-item>
+       <br/>
+      </el-form>
+      &nbsp;&nbsp;&nbsp;<el-upload
+             class="upload-demo"
+             ref="upload"
+             v-bind:action="api"
+             v-bind:data="weight"
+             :before-upload="handlePreview"
+             :on-success="uploadSuccess"
+             :file-list="fileList"
+             :limit="1"
+             :auto-upload="false">
+      <el-button slot="trigger" size="small" type="primary" name="file" id="file">上传<i class="el-icon-upload el-icon--right"></i></el-button>
+      <!--       <el-button slot="trigger" size="small" type="primary">选取文件</el-button>-->
+      <el-button style="margin-left: 10px;" size="small" type="warning" @click="uploadSubmit">上传到服务器</el-button>
+     </el-upload>
+      <div slot="footer" class="dialog-footer">
+       <el-button @click="open = false">取 消</el-button>
+<!--       <el-button type="primary" @click="sure">确 定</el-button>-->
+      </div>
+     </el-dialog>
+
+    </el-form>
+
+    <el-row>
+     <el-col :span="4" v-for="(weight, index) in weights" :key="index" :offset="index > 0 && index %5 != 0 ? 1:0">
+<!--   :fit="fit"   -->
+      <el-card :body-style="{ padding: '0px' }" style="width: 250px">
+       <el-image style="width: 250px; height: 280px" v-bind:src="weight.url" ></el-image>
+       <div style="padding: 14px;">
+        <span>{{weight.category}}</span>
+        <hr/>
+        <div class="bottom clearfix" align="center">
+<!--         <time class="time">{{ weight.date }}</time>-->
+         <el-button type="warning" size="mini"  @click="details(weight.message)">详情</el-button>
+         <el-button type="primary" size="mini"  @click="download(weight.id)">下载</el-button>
+         <el-button type="danger" size="mini"  @click="deleteWeight(weight.id)">删除</el-button><br/><br/>
+         <el-button type="success" size="small"  @click="addWeight(weight.id)">添加到库</el-button>
+        </div>
+       </div>
+      </el-card>
+     </el-col>
+    </el-row>
+    <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-sizes="[5, 10, 15, 20]"
+            :page-size="5"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="totalCount">
+    </el-pagination>
+   </el-card>
+
+   </div>
+
+
+
+  </div>
+ </div>
+  <!--Global Javascript -->
+ <script src="../js/jquery.min.js"></script>
+ <script src="../js/popper/popper.min.js"></script>
+ <script src="../js/tether.min.js"></script>
+ <script src="../js/bootstrap.min.js"></script>
+ <script src="../js/jquery.cookie.js"></script>
+ <script src="../js/jquery.validate.min.js"></script>
+ <script src="../js/chart.min.js"></script>
+ <script src="../js/front.js"></script>
+ <script src="../js/axios-0.18.0.js" ></script>
+ <script src="../js/vue.js"></script>
+ <script src="../element-ui/lib/index.js"></script>
+ <!--<script src="../js/chart-page.js"></script>-->
+ <link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+  <!--Core Javascript -->
+  <script>
+        var ip = window.location.hostname;
+        var local = window.location.host;
+        var chat = new Vue({
+            el:"#menuApp",
+            data(){
+             return {
+              api:"http://" + local + "/weight/updateFile",
+              fileList:[],
+              multipleSelection: [],
+              search_: {
+               type: null,
+               content: null
+              },
+              user:[],
+              weights:[],
+              totalCount:100,
+              pageSize:5,
+              currentPage: 1,
+              contain:"none",
+              open:false,
+              weight:{
+               category:"Indicator",
+               message: ""
+              },
+              mes:""
+             }
+            },
+            methods: {
+             onSubmit() {                     //搜索
+              this.search_.type = 'type';
+              console.log(this.search_)
+              this.selectALl();
+             },
+             handleSizeChange(val) {            //分页
+              this.pageSize = val;
+              this.selectALl();
+              //console.log(`每页 ${val} 条`);
+             },
+             handleCurrentChange(val) {
+              this.currentPage = val;
+              this.selectALl();
+              //.log(`当前页: ${val}`);
+             },
+             handlePreview(file) {
+              // console.log(file);
+              // console.log("11112222");
+             },
+             uploadError(){},
+             uploadSuccess(response,file,fileList){
+              this.api = "http://" + local + "/weight/updateFile";
+              this.mes = file.response;
+              console.log(this.mes);
+              this.$message({type: 'success', message: this.mes,customClass:'new_z_index'});
+             },
+             uploadSubmit(){
+              this.$confirm('\0\0上传模型文件须包含.cfg文件.weights文件以及作为封面的.jpg图片，' +
+                      '并将3个文件打包成.zip文件上传，否则将上传失败，确认上传吗', '提示', {
+               confirmButtonText: '确定',
+               cancelButtonText: '取消',
+               type: 'warning'
+              }).then(() => {
+               if(this.weight.category === null || this.weight.message === null || this.weight.category === "" || this.weight.message === ""){
+                this.$message({type: 'error', message: '识别类型和权重文件描述不得为空',customClass:'new_z_index'});
+               }else{
+                console.log("in");
+                this.$refs.upload.submit();
+                this.open = false;
+               }
+              }).catch(() => {
+              });
+             },
+             deleteWeight(id){
+              console.log(id);
+              var _this = this;
+              this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
+               confirmButtonText: '确定',
+               cancelButtonText: '取消',
+               type: 'warning'
+              }).then(() => {
+               axios({
+                method: "post",
+                url: "http://" + local + "/weight/deleteWeightById?id="+ id,
+               }).then(resp => {
+                this.mes = resp.data;
+                console.log(resp.data);
+                if(this.mes === "ok"){
+                 this.$message({type: 'success', message: '删除成功!',customClass:'new_z_index'});
+                }else{
+                 this.$message({type: 'error', message: this.mes,customClass:'new_z_index'});
+                }
+                this.selectALl();
+               })
+              }).catch(() => {
+               _this.$message({type: 'info', message: '已取消删除',customClass:'new_z_index'});
+              });
+             },
+             selectALl() {
+              axios({
+               method: "post",
+               url: "http://" + local + "/weight/selectByPageAndCondition?currentPage=" + this.currentPage + "&pageSize=" + this.pageSize,
+               data:this.search_
+              }).then(resp => {
+               this.weights = resp.data.rows;
+               this.totalCount = resp.data.totalCount;
+               if(this.totalCount<1) this.totalCount = 1;
+               var maxPageCount = Math.ceil(this.totalCount/this.pageSize);
+               console.log("this.totalCount = " + this.totalCount);
+               console.log("maxPageCount = " + maxPageCount);
+               if(this.currentPage>maxPageCount){
+                console.log("in");
+                this.currentPage = maxPageCount;
+                this.show();
+               }
+              })
+             },
+             show(){
+              axios({
+               method: "post",
+               url: "http://" + local + "/weight/selectByPageAndCondition?currentPage=" + this.currentPage + "&pageSize=" + this.pageSize,
+               data:this.search_
+              }).then(resp => {
+               this.weights = resp.data.rows;
+               this.totalCount = resp.data.totalCount;
+              })
+             },
+             clear() {
+              this.search_.content = null;
+              this.search_.type = null;
+              axios({
+               method: "post",
+               url: "http://" + local + "/weight/selectByPageAndCondition?currentPage=" + this.currentPage + "&pageSize=" + this.pageSize,
+               data:this.search_
+              }).then(resp => {
+               this.weights = resp.data.rows;
+               this.totalCount = resp.data.totalCount;
+              })
+             },
+             details(message){
+              this.$alert(message, '模型描述', {
+               confirmButtonText: '确定'
+              });
+             },
+             download(id){
+              window.open("http://" + local + "/weight/packageZip?id=" + id,'_blank');
+             },
+             addWeight(id){
+              this.$confirm('是否将该模型保存至自己的库?', '提示', {
+               confirmButtonText: '确定',
+               cancelButtonText: '取消',
+               type: 'warning'
+              }).then(() => {
+               axios({
+                method: "post",
+                url: "http://" + local + "/weight/addWeightById?id="+ id,
+               }).then(resp => {
+                this.mes = resp.data;
+                console.log(resp.data);
+                if(this.mes === "ok"){
+                 this.$message({type: 'success', message: '添加成功!',customClass:'new_z_index'});
+                }else{
+                 this.$message({type: 'error', message: this.mes,customClass:'new_z_index'});
+                }
+               })
+              }).catch(() => {
+              });
+             }
+            },
+            mounted(){
+               this.selectALl();
+               axios({
+                method:"get",
+                url:"http://" + local + "/menu/hostdataservlet"
+               }).then(resp =>{
+                this.user = resp.data;
+                if(this.user.id === 15){
+                 $("#managerInfo1").show();
+                 $("#managerInfo2").show();
+                }else{
+                 $("#managerInfo1").hide();
+                 $("#managerInfo2").hide();
+                }
+               })
+            }
+        })
+
+  </script>
+
+ <style>
+  .upload-demo{
+   display: inline-block;
+  }
+  .new_z_index {
+   z-index:99000 !important;
+  }
+ </style>
+
+
+ </body>
+</html>

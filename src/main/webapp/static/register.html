@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-model="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8" />
+    <!--script type="text/javascript" src="js/jquery.js"></script-->
+    <script type="application/x-javascript">
+        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+    <meta
+            name="keywords"
+            content="Flat Dark Web Login Form Responsive Templates, Iphone Widget Template, Smartphone login forms,Login form, Widget Template, Responsive Templates, a Ipad 404 Templates, Flat Responsive Templates"
+    />
+    <link href="http://localhost:8080/mydemo_war/css/login/style.css" rel="stylesheet" type="text/css" />
+
+
+
+</head>
+<body alink="white" vlink="pink">
+
+
+<h1>机房识别系统</h1>
+
+<div class="login-form">
+    <div class="close"></div>
+    <div class="head-info">
+        <label class="lbl-1"> </label>
+        <label class="lbl-2"> </label>
+        <label class="lbl-3"> </label>
+    </div>
+    <div class="clear"></div>
+    <div class="avtar">
+        <img src ="http://localhost:8080/mydemo_war/img/avtar.png"alt ="用户图片"/>
+    </div>
+    <div id="app">
+    <form >
+<!--    /mydemo_war/user/register    -->
+
+        <input
+                type="text"
+                class="text"
+                name = "username"
+                id = "username"
+                v-model="user.username"
+                @blur="onblur"
+        />
+        <div>
+<!--      onfocus= "this.value = '';"      value = "请输入账号"-->
+        </div>
+        <div class="key">
+            <input
+                    type="password"
+                    name = "password"
+                    value = "请输入密码"
+                    v-model="user.password"
+            />
+<!--            onfocus="this.value = '';"-->
+<!--            onblur="if (this.value == '') {this.value = 'Password';}"-->
+        </div>
+        <font color="red">{{message}}</font><br>
+        <input type="text1" class="text1" name = "checkCode" id = "checkCode" v-model="user.checkCode"/>
+        <a href="#" id="changImg" @click="checkCode">看不清，换一张</a>
+        <img id="checkCodeImg" src="/mydemo_war/checkcodeservlet">
+<!--    /mydemo_war/checkcodeservlet    -->
+        <br/><br/>
+            <div class="signin">
+                <input type="button" value="Register"  @click="submit">
+<!--                -->
+            </div>
+            <a href="mydemo_war/user/login">已有账号，去登录</a>
+    </form>
+</div>
+</div>
+
+    <script src="http://localhost:8080/mydemo_war/js/axios-0.18.0.js" ></script>
+    <script src="http://localhost:8080/mydemo_war/js/vue.js"></script>
+<script>
+    new Vue({
+        el:"#app",
+        data(){
+            return{
+                message:"",
+                user: {},
+                url:checkCode
+            }
+        },
+        methods:{
+            onblur(){
+                console.log(this.user.username);
+                var _this = this;
+                axios({
+                    method:"post",
+                    url: "http://localhost:8080/mydemo_war/user/registercheck",
+                    data: _this.user
+                }).then(function (resp){
+                    _this.message = resp.data;
+                    console.log(_this.message);
+                })
+            },
+            submit(){
+                var _this = this;
+                axios({
+                    method:"post",
+                    url: "http://localhost:8080/mydemo_war/user/register",
+                    data: _this.user
+                }).then(function (resp){
+                    _this.message = resp.data;
+                    console.log(_this.message);
+                })
+            },
+            checkCode(){
+                let vdo = document.getElementById("checkCodeImg")
+                var src = "/mydemo_war/checkcodeservlet?"+ new Date().getMilliseconds();
+                vdo.src = src
+                console.log(vdo.src);
+                //return src;
+            }
+        }
+    })
+</script>
+
+</body>
+</html>
+
+

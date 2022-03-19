@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="all,follow" />
+    <title></title>
+    <link rel="shortcut icon" href="img/favicon.ico" />
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/font-icon-style.css" />
+    <link rel="stylesheet" href="../css/style.default.css" id="theme-stylesheet" />
+</head>
+<body>
+<div id="menuApp">
+<!--====================================================
+                       MAIN NAVBAR
+======================================================-->
+<header class="header">
+    <nav class="navbar navbar-expand-lg ">
+        <div class="search-box">
+            <button class="dismiss"><i class="icon-close"></i></button>
+            <form id="searchForm" action="#" role="search">
+                <input type="search" placeholder="Search Now" class="form-control">
+            </form>
+        </div>
+        <div class="container-fluid ">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+                <div class="navbar-header">
+                    <a href="hostservlet" class="navbar-brand">
+                        <div class="brand-text brand-big hidden-lg-down"><img src="../img/logo-white.png" alt="Logo" class="img-fluid"></div>
+                        <div class="brand-text brand-small"><img src="../img/logo-icon.png" alt="Logo" class="img-fluid"></div>
+                    </a>
+                    <a id="toggle-btn" href="#" class="menu-btn active">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+            <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                <li class="nav-item dropdown"><a id="profile" class="nav-link logout" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle" style="height: 30px; width: 30px;"></a>
+                    <ul aria-labelledby="profile" class="dropdown-menu profile">
+
+                        <li>
+                            <a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                <div class="msg-profile"> <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"></div>
+                                <div class="msg-body">
+                                    <h3 class="h5">{{user.username}}</h3>
+                                </div>
+                            </a>
+                            <hr>
+                        </li>
+
+                        <li>
+                            <a rel="nofollow" href="profile" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-user "></i>用户基本信息</div>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a rel="nofollow" href="logout" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-power-off"></i>注销</div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+<!--                <li class="nav-item d-flex align-items-center"><a id="menu-toggle-right" class="nav-link" href="#"><i class="fa fa-bars"></i></a></li>-->
+<!--                <nav id="sidebar-wrapper">-->
+<!--                    <div class="sidebar-nav">-->
+<!--                        <div class="tab" role="tabpanel">-->
+<!--                            <div class="tab-content tabs">-->
+<!--                                <div role="tabpanel" class="tab-pane fade show active" id="trend">-->
+<!--                                    <div class="card card-c2" style="box-shadow: 0 0 0;">-->
+<!--                                        <div class="header">-->
+<!--                                            <h3 class="title">本系统用户登录情况</h3>-->
+<!--                                        </div>-->
+<!--                                        -->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </nav>-->
+            </ul>
+        </div>
+    </nav>
+</header>
+<!--====================================================
+                      PAGE CONTENT
+======================================================-->
+<div class="page-content d-flex align-items-stretch">
+    <!--***** SIDE NAVBAR *****-->
+    <nav class="side-navbar">
+        <div class="sidebar-header d-flex align-items-center" >
+            <div class="avatar">
+                <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"/>
+                <!--     "../img/avatar-1.jpg"           -->
+            </div>
+            <div class="title">
+                <h1 class="h4">{{user.username}}</h1>
+            </div>
+        </div>
+        <hr/>
+        <!-- Sidebar Navidation Menus-->
+        <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+        <ul class="list-unstyled">
+            <li><a href="hostservlet"><i class="icon-home"></i>主页</a></li>
+            <li><a href="#forms" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-building-o"></i>检测功能 </a>
+                <ul id="forms" class="collapse list-unstyled">
+                    <li><a href="lightcheck">开关/彩灯识别</a></li>
+                    <li><a href="clockcheck">数显/指针表识别</a></li>
+                </ul>
+            </li>
+            <li><a href="spellservlet"> <i class="fa fa-map-o"></i>图像拼接 </a></li>
+            <li><a href="#apps" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>数据库查询
+            </a>
+                <ul id="apps" class="collapse list-unstyled">
+                    <li><a href="lighttable">彩灯数据库</a></li>
+                    <li><a href="switchtable">开关数据库</a></li>
+                    <li><a href="numbertable">数显表数据库</a></li>
+                    <li><a href="pointtable">指针表数据库</a></li>
+                </ul>
+            </li>
+            <li><a href="#pages" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-file-o"></i>模型管理 </a>
+                <ul id="pages" class="collapse list-unstyled">
+                    <li><a href="weightSelf">我的模型</a></li>
+                    <li><a href="weightServlet">模型仓库</a></li>
+                    <li><a href="weightSelf">Gallery</a></li>
+                    <li><a href="login.html">Log In</a></li>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="search-result.html">Search Result</a></li>
+                    <li><a href="404.html">404</a></li>
+                </ul>
+            </li>
+            <li><a href="chart"> <i class="fa fa-bar-chart"></i>Chart </a></li>
+
+            <li><a href="weightServlet"> <i class="fa fa-map-o"></i>Maps </a></li>
+
+            <li><a href="check_light"> <i class="icon-grid"></i>Tables </a></li>
+            <li><a href="#elements" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-globe"></i>UI Elements
+            </a>
+                <ul id="elements" class="collapse list-unstyled">
+                    <li><a href="ui-buttons.html">Buttons</a></li>
+                    <li><a href="ui-cards.html">Cards</a></li>
+                    <li><a href="ui-progressbars.html">Progress Bar</a></li>
+                    <li><a href="ui-timeline.html">Timeline</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <span class="heading" id="managerInfo1">管理员功能</span>
+        <ul class="list-unstyled" id="managerInfo2" >
+            <li><a href="manageservlet"> <i class="fa fa-globe"></i>系统管理</a></li>
+            <li><a href="logmanage"> <i class="fa fa-file-o"></i>日志管理</a></li>
+        </ul>
+    </nav>
+    <div class="content-inner chart-cont">
+        <!--***** CONTENT *****-->
+<!--        <div class="row">-->
+            <el-row :gutter="20">
+                <el-col :span="11">
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <div class="text" style="text-align: center"><el-avatar :size="80" v-bind:src="user.avatarUrl"></el-avatar></div>
+                                <strong><div class="text" style="text-align: center;font-size: 20px" >用户名:{{user.username}}</div></strong>
+                                <strong><div class="text" style="text-align: center;font-size: 20px" >用户权限:管理员</div></strong>
+                            </div>
+                            <div>
+                                <el-form :inline="true" :model="search_" class="demo-form-inline">
+                                    <el-form-item label="搜索类型">
+                                        <el-select v-model="search_.type" placeholder="搜索类型" >
+                                            <el-option label="用户id" value="id"></el-option>
+                                            <el-option label="用户名" value="class"></el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                    <el-form-item label="搜索内容">
+                                        <el-input v-model="search_.content" placeholder="搜索内容"></el-input>
+                                    </el-form-item>
+                                    <br/>
+                                    <el-form-item>
+                                        <el-button type="primary" @click="onSubmit">查询</el-button>
+                                    </el-form-item>
+                                    <el-form-item>
+                                        <el-button type="success" @click="clear">重置</el-button>
+                                    </el-form-item>
+                                    <el-form-item>
+                                        <el-button type="warning" @click="open=true">新增</el-button>
+
+                                        <el-dialog title="新增用户" :visible.sync="open">
+                                        <el-form :model="form"  label-width="80px" size="small" align="center" >
+                                            <div class="text" style="text-align: center"><el-avatar :size="80" v-bind:src="form.avatarUrl"></el-avatar></div>
+                                            <a href="#" id="changAvatar" @click="changAvatar">换一张</a>
+                                            <br/><br/>
+                                            <el-form-item label="用户名" ><!-- :label-width="formLabelWidth" -->
+                                                <el-input v-model="form.username" autocomplete="off"></el-input>
+                                            </el-form-item>
+                                            <br/>
+                                            <el-form-item label="设置密码" ><!--:label-width="formLabelWidth"  -->
+                                                <el-input v-model="form.password" autocomplete="off" type="password"></el-input>
+                                            </el-form-item>
+                                            <br/>
+                                            <el-form-item label="确定密码" ><!-- :label-width="formLabelWidth" -->
+                                                <el-input v-model="form.password0" autocomplete="off" type="password"></el-input>
+                                            </el-form-item>
+                                        </el-form>
+                                        <div slot="footer" class="dialog-footer">
+                                            <el-button @click="open = false">取 消</el-button>
+                                            <el-button type="primary" @click="sure">确 定</el-button>
+                                        </div>
+                                    </el-dialog>
+                                    </el-form-item>
+                                </el-form>
+                            </div>
+                        </el-card>
+                    <br/>
+                    <template >
+                        <el-table
+                                :data="userList"
+                                stripe
+                                height="350"
+                                border
+                                style="width: 100%">
+                            <el-table-column
+                                    type="index"
+                                    width="50">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="username"
+                                    align="center"
+                                    label="用户名">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="id"
+                                    align="center"
+                                    label="用户id">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="registerTime"
+                                    align="center"
+                                    label="注册时间">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="loginTimes"
+                                    align="center"
+                                    label="登录次数">
+                            </el-table-column>
+                            <el-table-column
+                                    align="center"
+                                    label="opration">
+                                <template slot-scope="scope">
+                                    <el-row>
+                                        <el-button type="danger" @click="deleteOneMes(scope.row.id,scope.row.username)">删除</el-button>
+                                    </el-row>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </template>
+<!--                    </div>-->
+                </el-col>
+                <el-col :span="13">
+<!--                    <div class="grid-content bg-purple">-->
+                    <el-row :gutter="20">
+                        <el-col :span="8">
+                            <el-card shadow="always" class="box-card-1" >
+                                <font color="#f0f8ff"><h5><i class="fa fa-superpowers"></i> 系统访问量:{{systemMes.visitorVolume}}</h5></font>
+                            </el-card>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-card shadow="always" class="box-card-2">
+                                <font color="#f0f8ff"><h5><i class="fa fa-dot-circle-o"></i> 当前用户量:{{systemMes.userVolume}}</h5></font>
+                            </el-card>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-card shadow="always" class="box-card-3">
+                                <font color="#f0f8ff"><h5><i class="fa fa-refresh"></i> 当前日志量:{{systemMes.documentVolume}} </h5></font>
+                            </el-card>
+                        </el-col>
+                    </el-row>
+                    <br/>
+                    <el-row :gutter="20">
+                        <el-col :span="14">
+<!--                            <div class="grid-content bg-purple">-->
+                            <el-card class="box-card" style="height: 350px" >
+                                <div class="block">
+                                    <el-timeline>
+                                        <el-timeline-item v-bind:timestamp="systemMes.historyTime[0]" placement="top">
+                                            <el-card style="height: 70px">
+                                                <h7>{{systemMes.username[0]}} {{systemMes.logMessage[0]}}</h7>
+                                            </el-card>
+                                        </el-timeline-item>
+                                        <el-timeline-item v-bind:timestamp="systemMes.historyTime[1]" placement="top">
+                                            <el-card style="height: 70px">
+                                                <h7>{{systemMes.username[1]}} {{systemMes.logMessage[1]}}</h7>
+                                            </el-card>
+                                        </el-timeline-item>
+                                        <el-timeline-item v-bind:timestamp="systemMes.historyTime[2]" placement="top">
+                                            <el-card style="height: 70px">
+                                                <h7>{{systemMes.username[2]}} {{systemMes.logMessage[2]}}</h7>
+                                            </el-card>
+                                        </el-timeline-item>
+                                    </el-timeline>
+                                </div>
+                            </el-card>
+                        </el-col>
+                        <el-col :span="10">
+                            <el-card class="box-card" height="250">
+                                <div class="content" >
+                                    <canvas class="ct-chart" id="myChart-nav" height="220"></canvas>
+                                    <div class="footer">
+                                        <div class="legend">
+                                            <i class="fa fa-circle text-info"></i> 离线人数
+                                            <i class="fa fa-circle text-success"></i> 在线人数
+                                        </div>
+                                        <hr>
+                                        <div class="stats">
+                                            <i class="fa fa-clock-o"></i> 登录用户信息检测可能存在延时
+                                        </div>
+                                    </div>
+                                </div>
+                            </el-card>
+
+                        </el-col>
+                    </el-row>
+                    <br/>
+                    <el-card class="box-card">
+
+<!--           style="height: 320px"           height="200"   class="ct-chart"-->
+                        <div class="block">
+                            <canvas  id="line-chart" height="100"></canvas>
+                        </div>
+                        <el-button type="primary" @click="lastPage">上一页</el-button>
+                        <el-button type="primary" @click="nextPage">下一页</el-button>
+                    </el-card>
+
+
+                </el-col>
+
+            </el-row>
+
+    </div>
+
+
+</div>
+
+</div>
+
+<!--Global Javascript -->
+<script src="../js/jquery.min.js"></script>
+<script src="../js/popper/popper.min.js"></script>
+<script src="../js/tether.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/jquery.cookie.js"></script>
+<script src="../js/jquery.validate.min.js"></script>
+<script src="../js/chart.min.js"></script>
+<script src="../js/front.js"></script>
+<script src="../js/axios-0.18.0.js" ></script>
+<script src="../js/vue.js"></script>
+<script src="../element-ui/lib/index.js"></script>
+<!--<script src="../js/chart-page.js"></script>-->
+<link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+
+<style>
+    .box-card-1 {
+        background: #00aff0;
+    }
+    .box-card-2 {
+        background: #ebb563;
+    }
+    .box-card-3 {
+        background: #5daf34;
+    }
+    .text{
+        text-align:center;
+        font-size: 10px;
+    }
+
+</style>
+
+<script>
+    var local = window.location.host;
+    var ip = window.location.hostname;
+    var admin = new Vue({
+
+        el:"#menuApp",
+        data(){
+            return{
+                message:"",
+                user:[],
+                userList:[],
+                search_: {
+                    type: '',
+                    content: ''
+                },
+                deleteMes:{
+                    id:'',
+                    username:''
+                },
+                open:false,
+                thisWeekLogin:[],
+                weekOfYearNo:0,
+                form: {
+                    username: '',
+                    password: '',
+                    password0: '',
+                    avatarUrl: "http://" + ip + "/Avatar/avatar.jpg",
+                },
+                systemMes:{
+                    visitorVolume:'',
+                    userVolume:'',
+                    systemLogVolume:'',
+                    historyTime:[],
+                    logMessage:[],
+                    username:[],
+                    documentVolume:'',
+                    weekOfYear:''
+                }
+            }
+        },
+        methods:{
+            onSubmit(){
+                console.log(this.search_.content);
+                axios({
+                    method:"post",
+                    url:"http://" + local + "/manager/selectUserMessage",
+                    data: this.search_
+                }).then(resp =>{
+                    console.log(resp.data);
+                    this.userList = resp.data;
+                })
+            },
+            clear(){
+                axios({
+                    method:"get",
+                    url:"http://" + local + "/manager/userMessage"
+                }).then(resp =>{
+                    console.log(resp.data);
+                    this.userList = resp.data;
+                })
+            },
+            changAvatar(){
+                axios({
+                    method:"get",
+                    url:"http://" + local + "/user/createPicture"
+                }).then(resp =>{
+                    console.log(resp.data);
+                    this.form.avatarUrl = resp.data;
+                })
+            },
+            sure(){
+                if(this.form.username === ''){
+                    this.$message({message:'账号不得为空', type:'error', customClass:'new_z_index'})
+                    return;
+                }else if(this.form.password === ''){
+                    this.$message({message:'密码不得为空', type:'error', customClass:'new_z_index'});
+                    return;
+                }else if(this.form.password !== this.form.password0){
+                    this.$message({message:'两次密码输入不一致', type:'error', customClass:'new_z_index'});
+                    return;
+                }
+                this.add();
+            },
+            add(){
+                axios({
+                    method:"post",
+                    url:"http://" + local + "/user/manageRegister",
+                    data: this.form
+                }).then(resp =>{
+                    console.log(resp.data);
+                    this.message = resp.data;
+                    if(this.message === "注册成功"){
+                        // this.$message({message:this.message, type:'success', customClass:'new_z_index'});
+                        this.$alert('注册成功！', '提示', {
+                            confirmButtonText: '确定',
+                            callback: action => {
+                                this.$message({
+                                    type: 'success',
+                                    message: this.message,
+                                    customClass:'new_z_index'
+                                });
+                            }
+                        });
+                    }else if(this.message === "该用户名已存在"){
+                        this.$message({message:this.message, type:'warning', customClass:'new_z_index'});
+                    }
+                })
+            },
+            deleteOneMes(id,username){
+                console.log(id);
+                this.deleteMes.id = id;
+                this.deleteMes.username = username;
+                this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios({
+                        method: "post",
+                        url: "http://" + local + "/user/deleteServlet",
+                        data: this.deleteMes
+                    }).then (resp=>{
+                        this.message = resp.data;
+                        this.$message({type: 'success', message: this.message,customClass:'new_z_index'});
+                        this.clear();
+                    })
+                }).catch(() => {
+                    this.$message({type: 'info', message: '已取消删除',customClass:'new_z_index'});
+                });
+
+            },
+            updateSystemInfo(){
+                axios({
+                    method:"get",
+                    url:"http://" + local + "/manager/updateSystemInfo"
+                }).then(resp =>{
+                    console.log(resp.data);
+                    this.systemMes = resp.data;
+                    this.weekOfYearNo = parseInt(this.systemMes.weekOfYear);
+                    console.log(this.systemMes.historyTime[0]);
+                })
+            },
+            lastPage(){
+                this.weekOfYearNo --;
+                if(this.weekOfYearNo < 1) this.weekOfYearNo = 1;
+                else if(this.weekOfYearNo > parseInt(this.systemMes.weekOfYear)) this.weekOfYearNo = parseInt(this.systemMes.weekOfYear);
+                console.log(this.weekOfYearNo);
+                    axios({
+                    method:"post",
+                    url:"http://" + local + "/manager/turnPageTable",
+                    data:this.weekOfYearNo
+                }).then(resp =>{
+                    console.log(resp.data);
+                    this.thisWeekLogin = resp.data;
+                    this.showChart();
+                })
+            },
+            nextPage(){
+                this.weekOfYearNo ++;
+                if(this.weekOfYearNo < 1) this.weekOfYearNo = 1;
+                else if(this.weekOfYearNo > parseInt(this.systemMes.weekOfYear)) this.weekOfYearNo = parseInt(this.systemMes.weekOfYear);
+                console.log(this.weekOfYearNo);
+                axios({
+                    method:"post",
+                    url:"http://" + local + "/manager/turnPageTable",
+                    data:this.weekOfYearNo
+                }).then(resp =>{
+                    console.log(resp.data);
+                    this.thisWeekLogin = resp.data;
+                    this.showChart();
+                })
+            },
+            showChart(){
+                new Chart(document.getElementById("line-chart"), {
+                    type: 'line',
+                    data: {
+                        labels: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+                        datasets: [{
+                            data: this.thisWeekLogin,
+                            label: "登录次数",
+                            borderColor: "#3cba9f",//"#3e95cd"    "#8e5ea2"  "#3cba9f"
+                            fill: false
+                        }
+                        ]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: '机房信息管理系统每周登录情况'
+                        }
+                    }
+                });
+            }
+        },
+
+        mounted(){
+            this.clear();
+            this.updateSystemInfo();
+            axios({
+                method:"get",
+                url:"http://" + local + "/menu/hostdataservlet"
+            }).then(resp =>{
+                console.log(resp.data);
+                this.user = resp.data;
+                if(this.user.id === 15){
+                    $("#managerInfo1").show();
+                    $("#managerInfo2").show();
+                }else{
+                    $("#managerInfo1").hide();
+                    $("#managerInfo2").hide();
+                }
+            })
+            axios({
+                method:"get",
+                url:"http://" + local + "/manager/updateSystemWeek"
+            }).then(resp =>{
+                console.log(resp.data);
+                this.thisWeekLogin = resp.data;
+                this.showChart();
+            })
+
+            axios({
+                method: "get",
+                url:"http://" + local + "/menu/onlineservlet"
+            }).then(resp => {
+                this.admin = resp.data;
+                this.onlineSize = parseInt(this.admin["onlineSize"]);
+                this.offlineSize = parseInt(this.admin["offlineSize"]);
+                var _this = this;
+                new Chart(document.getElementById("myChart-nav").getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ["M", "T", "W", "T", "F", "S", "S"],
+                        datasets: [{
+                            backgroundColor: [
+                                "#2ecc71",
+                                "#3498db"
+                            ],
+                            data: [_this.onlineSize,_this.offlineSize]//,
+                        }]
+                    },
+                    options: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: ''
+                        }
+                    }
+                });
+
+
+            })
+        }
+    })
+</script>
+
+<style>
+    .new_z_index {
+        z-index:99000 !important;
+    }
+</style>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration  status="WARN" monitorInterval="30" >
+<!--    -->
+<!--  xmlns="http://logging.apache.org/log4j/2.0/config"  -->
+    <properties>
+        <property name="LOG_HOME">/home/sy/IMAGE/log/system</property>
+    </properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] [%-5level] %c{36}:%L --- %m%n"></PatternLayout>
+        </Console>
+        <Async name="ASYNC">
+            <AppenderRef ref="Console"/>
+        </Async>
+        <File name="file" filename="${LOG_HOME}/myFile.log" filePattern="${FILE_PATH}/${FILE_NAME}-INFO-%d{yyyy-MM-dd}_%i.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] [%-5level] %c{36}:%L --- %m%n"></PatternLayout>
+        </File>
+        <Policies>
+            <TimeBasedTriggeringPolicy interval="1"/>
+            <SizeBasedTriggeringPolicy size="10 MB"/>
+        </Policies>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="ASYNC"></AppenderRef>
+            <AppenderRef ref="file"></AppenderRef>
+        </Root>
+    </Loggers>
+</Configuration>
