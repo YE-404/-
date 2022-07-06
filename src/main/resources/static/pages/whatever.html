@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鼠标拖动绘制矩形区域</title>
+    <style>
+        .draw-box {
+            width: 600px;
+            height: 600px;
+            background-color: aqua;
+            margin: 10px auto;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+<div class="draw-box" id="drawArear">
+
+</div>
+<script>
+    initDrawReact('drawArear', (ops) => {
+        console.log(ops)
+    })
+    function initDrawReact (id, fn) {
+        var drawArear = document.getElementById(id); // 获取画布元素
+        // 创建矩形框
+        var drawReact = document.createElement('div');
+        drawReact.id = 'drawReact'
+        console.log(drawReact)
+        drawReact.style.boxSizing = 'border-box'
+        drawReact.style.border = '1px dashed black'
+        drawReact.style.position = 'absolute'
+        drawReact.style.display = 'none'
+        drawArear.appendChild(drawReact)
+        // 绑定鼠标事件--onmousedown
+        drawArear.onmousedown = function ($event) {
+            // 初始化
+            var drawReact = document.getElementById('drawReact'); // 获取矩形框元素
+            var areaInfo = drawArear.getBoundingClientRect(); // 返回元素的大小及其相对于视口的位置
+            var reactWidth, reactHeight, reactTop, reactLeft; // 定义矩形框的宽、高、top、left
+            // xy坐标是以画布的左上角为原点，方向矢量以向下和向右为正方向。
+            var beginPoint = {}; // 标记起点
+            var endPoint = {}; // 标记终点
+
+            drawReact.style.display = 'block'; // 进入画布按下鼠标显示默认矩形框
+            // 鼠标按下的位置作为矩形框的起点，横纵坐标记为 x0, y0
+            beginPoint = { x: $event.clientX - areaInfo.x, y: $event.clientY - areaInfo.y }
+            // 起点的横坐标
+            var x0 = $event.clientX - areaInfo.x;
+            // 起点的纵坐标
+            var y0 = $event.clientY - areaInfo.y;
+            // 绑定鼠标事件--onmousemove
+            document.onmousemove = function ($event) {
+                // 终点的横坐标
+                var x1 = $event.clientX - areaInfo.x;
+                // 终点的纵坐标
+                var y1 = $event.clientY - areaInfo.y;
+                // 对终点相对于起点的位置进行分类讨论
+                if (x1 >= x0 && y1 < y0) {
+                    // x 越界处理
+                    reactWidth = $event.clientX >= areaInfo.right ? areaInfo.width - x0 : x1 - x0;
+                    reactLeft = x0;
+                    // y 越界处理
+                    reactHeight = $event.clientY <= areaInfo.top ? y0 : y0 - y1;
+                    reactTop = $event.clientY <= areaInfo.top ? 0 : y1;
+                    // 终点
+                    endPoint = { x: x0 + reactWidth, y: y0 - reactHeight };
+                } else if (x1 < x0 && y1 < y0) {
+                    // x 越界处理
+                    reactWidth = $event.clientX <= areaInfo.left ? x0 : x0 - x1;
+                    reactLeft = $event.clientX <= areaInfo.left ? 0 : x1;
+                    // y 越界处理
+                    reactHeight = $event.clientY <= areaInfo.top ? y0 : y0 - y1;
+                    reactTop = $event.clientY <= areaInfo.top ? 0 : y1;
+                    // 终点
+                    endPoint = { x: x0 - reactWidth, y: y0 - reactHeight };
+                } else if (x1 < x0 && y1 >= y0) {
+                    // x 越界处理
+                    reactWidth = $event.clientX <= areaInfo.left ? x0 : x0 - x1;
+                    reactLeft = $event.clientX <= areaInfo.left ? 0 : x1;
+                    // y 越界处理
+                    reactHeight = $event.clientY >= areaInfo.bottom ? areaInfo.height - y0 : y1 - y0;
+                    reactTop = y0;
+                    // 终点
+                    endPoint = { x: x0 - reactWidth, y: y0 + reactHeight };
+                } else if (x1 >= x0 && y1 >= y0) {
+                    // x 越界处理
+                    reactWidth = $event.clientX >= areaInfo.right ? areaInfo.width - x0 : x1 - x0;
+                    reactLeft = x0
+                    // y 越界处理
+                    reactHeight = $event.clientY >= areaInfo.bottom ? areaInfo.height - y0 : y1 - y0;
+                    reactTop = y0;
+                    // 终点
+                    endPoint = { x: x0 + reactWidth, y: y0 + reactHeight };
+                }
+
+                drawReact.style.width = reactWidth + 'px'; // 宽
+                drawReact.style.height = reactHeight + 'px'; // 高
+                drawReact.style.top = reactTop + 'px';
+                drawReact.style.left = reactLeft + 'px';
+            }
+
+            // 绑定鼠标事件--onmousedown
+            document.onmouseup = function ($event) {
+                document.onmousemove = null
+                document.onmouseup = null
+                // 回调
+                var options = { reactWidth, reactHeight, reactTop, reactLeft, beginPoint, endPoint }
+                fn(options)
+            }
+        }
+    }
+</script>
+</body>
+
+</html>

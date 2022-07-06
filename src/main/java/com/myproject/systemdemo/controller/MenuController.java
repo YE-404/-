@@ -123,6 +123,11 @@ public class MenuController {
     public String pointTableServlet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         return "tablePoint";
     }
+    @RequestMapping(value = "/tasktable", method = RequestMethod.GET)
+    public String taskTableServlet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        return "tableTask";
+    }
+
 
     @RequestMapping(value = "/lightcheck", method = RequestMethod.GET)
     public String lightCheckServlet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

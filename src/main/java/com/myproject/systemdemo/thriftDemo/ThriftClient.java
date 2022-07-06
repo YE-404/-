@@ -21,6 +21,8 @@ public class ThriftClient {
     private TransmitMes transmitMes = new TransmitMes();
 
     private Directory directory = new Directory();
+    //private TTransport transport = new TSocket("127.0.0.1", 9000);
+
 
     @Autowired
     private UserMapper userMapper;
@@ -40,15 +42,11 @@ public class ThriftClient {
         try {
             transport.open();
             result = client.GetImageAnalysisResult(jsonMessage);
-        } catch (TTransportException e) {
-            e.printStackTrace();
         } catch (TException e) {
             e.printStackTrace();
         }
         transport.close();
-        transport = null;
-        protocol = null;
-        client = null;
+
         System.out.println("thrift client close connextion");
         return result;
     }

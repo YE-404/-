@@ -1,0 +1,6 @@
+classes= 11
+train  = /home/yc/darknet-master/scripts/number/2016_train.txt
+valid  = /home/yc/darknet-master/scripts/number/2016_val.txt
+names = cfg/number.names
+backup = backup
+#eval=coco

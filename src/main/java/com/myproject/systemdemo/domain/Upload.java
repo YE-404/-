@@ -1,5 +1,7 @@
 package com.myproject.systemdemo.domain;
 
+import java.util.Arrays;
+
 public class Upload {
     private String exampleSelect;
     private String optionsRadios;
@@ -61,13 +63,16 @@ public class Upload {
         this.status = status;
     }
 
-
     @Override
     public String toString() {
         return "Upload{" +
                 "exampleSelect='" + exampleSelect + '\'' +
                 ", optionsRadios='" + optionsRadios + '\'' +
                 ", status='" + status + '\'' +
+                ", checkedLights=" + Arrays.toString(checkedLights) +
+                ", checkedSwitches=" + Arrays.toString(checkedSwitches) +
+                ", checkedNumbers=" + Arrays.toString(checkedNumbers) +
+                ", checkedPoints=" + Arrays.toString(checkedPoints) +
                 '}';
     }
 }

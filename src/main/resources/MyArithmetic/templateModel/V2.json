@@ -1,0 +1,10 @@
+{"part_info_list": [
+  {"id": 1,
+    "corners": null,
+    "scale_points": [82.8, 339.3, 95.3, 259.0, 132.2, 185.2, 190.5, 128.0, 263.8, 89.3, 344.1, 76.8],
+    "scale_numbers": [0, 2, 4, 6, 8, 10],
+    "circle_point":[344.1,338.1],
+    "value_range": 10,
+    "angle_range": 90
+  }
+]}

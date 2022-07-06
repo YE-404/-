@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:V-model="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="robots" content="all,follow"/>
+    <title></title>
+    <link rel="shortcut icon" href="img/favicon.ico"/>
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"/>
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../css/font-icon-style.css"/>
+    <link rel="stylesheet" href="../css/style.default.css" id="theme-stylesheet"/>
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="../css/form.css"/>
+    <link rel="stylesheet" href="../css/card.css"/>
+
+
+
+</head>
+<body>
+<div id="menuApp">
+<!--====================================================
+                   MAIN NAVBAR
+======================================================-->
+<header class="header">
+    <nav class="navbar navbar-expand-lg ">
+        <div class="search-box">
+            <button class="dismiss"><i class="icon-close"></i></button>
+            <form id="searchForm" action="#" role="search">
+                <input type="search" placeholder="Search Now" class="form-control">
+            </form>
+        </div>
+        <div class="container-fluid ">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+                <div class="navbar-header">
+                    <a href="hostservlet" class="navbar-brand">
+                        <div class="brand-text brand-big hidden-lg-down"><img src="../img/logo-white.png" alt="Logo" class="img-fluid"></div>
+                        <div class="brand-text brand-small"><img src="../img/logo-icon.png" alt="Logo" class="img-fluid"></div>
+                    </a>
+                    <a id="toggle-btn" href="#" class="menu-btn active">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+            <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                <li class="nav-item dropdown"><a id="profile" class="nav-link logout" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle" style="height: 30px; width: 30px;"></a>
+                    <ul aria-labelledby="profile" class="dropdown-menu profile">
+
+                        <li>
+                            <a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                <div class="msg-profile"> <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"></div>
+                                <div class="msg-body">
+                                    <h3 class="h5">{{user.username}}</h3>
+                                </div>
+                            </a>
+                            <hr>
+                        </li>
+
+                        <li>
+                            <a rel="nofollow" href="profile" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-user "></i>用户基本信息</div>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a rel="nofollow" href="logout" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-power-off"></i>注销</div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<!--====================================================
+                  PAGE CONTENT
+======================================================-->
+<div class="page-content d-flex align-items-stretch">
+    <!--***** SIDE NAVBAR *****-->
+    <nav class="side-navbar">
+        <div class="sidebar-header d-flex align-items-center" >
+            <div class="avatar">
+                <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"/>
+                <!--     "../img/avatar-1.jpg"           -->
+            </div>
+            <div class="title">
+                <h1 class="h4">{{user.username}}</h1>
+            </div>
+        </div>
+        <hr/>
+        <!-- Sidebar Navidation Menus-->
+        <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+        <ul class="list-unstyled">
+            <li class="active"><a href="host.html"><i class="icon-home"></i>主页</a></li>
+            <li><a href="#forms" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-building-o"></i>检测功能 </a>
+                <ul id="forms" class="collapse list-unstyled">
+                    <li><a href="uploadLight.html">开关/彩灯识别</a></li>
+                    <li><a href="uploadClock.html">数显/指针表识别</a></li>
+                </ul>
+            </li>
+            <li><a href="spell.html"> <i class="fa fa-map-o"></i>图像拼接 </a></li>
+            <li><a href="#apps" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>数据库查询</a>
+
+            <li><a href="tableTask.html"> <i class="fa fa-map-o"></i>任务点 </a></li>
+            <li><a href="TaskFlow.html"> <i class="fa fa-map-o"></i>巡检任务设置 </a></li>
+            <li><a href="occupancygrid.html"> <i class="fa fa-map-o"></i>控制台 </a></li>
+            <ul id="apps" class="collapse list-unstyled">
+                <li><a href="tableLight.html">彩灯数据库</a></li>
+                <li><a href="tableSwitch.html">开关数据库</a></li>
+                <li><a href="tableNumber.html">数显表数据库</a></li>
+                <li><a href="tablePoint.html">指针表数据库</a></li>
+            </ul>
+            </li>
+            <li><a href="#pages" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-file-o"></i>模型管理 </a>
+                <ul id="pages" class="collapse list-unstyled">
+                    <li><a href="weightSelf.html">我的模型</a></li>
+                    <li><a href="weightStore.html">模型仓库</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <span class="heading" id="managerInfo1">管理员功能</span>
+        <ul class="list-unstyled" id="managerInfo2" >
+            <li><a href="manage.html"> <i class="fa fa-globe"></i>系统管理</a></li>
+            <li><a href="LogManage.html"> <i class="fa fa-file-o"></i>日志管理</a></li>
+        </ul>
+    </nav>
+    <div class="content-inner form-cont">
+        <div class="row">
+            <div class="col-md-12" id="form">
+                <el-row :gutter="20">
+                    <el-col :span="10">
+                        <h2 align="center">全部任务</h2><br><br>
+                        <template>
+                            <el-table
+                                :data="tasks"
+                                stripe
+                                height="600"
+                                border
+                                style="width: 100%; font-size: 20px">
+                            <el-table-column
+                                    prop="id"
+                                    width="100"
+                                    label="任务id">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="taskName"
+                                    align="center"
+                                    label="任务名">
+                            </el-table-column>
+                            <el-table-column
+                                    align="center"
+                                    label="操 作">
+                                <template slot-scope="scope">
+                                    <el-row>
+                                        <el-button type="primary" plain @click="addToTaskFlow(scope.row.id)">添加到流程</el-button>
+                                    </el-row>
+                                </template>
+                            </el-table-column>
+                            </el-table>
+                        </template>
+                    </el-col>
+                    <el-col :span="14">
+                        <h2 align="center">任务流程</h2>
+                        <div align="right">
+                            <el-time-select v-model="interval" :picker-options="{start: '00:00',step: '00:30',end: '3:00'}" placeholder="选择时间"></el-time-select>
+                            <el-button type="success" plain @click="beginTaskFlow()">开始任务</el-button>
+                        </div>
+                        <template>
+                            <el-table
+                                    :data="taskFlows"
+                                    stripe
+                                    height="600"
+                                    border
+                                    style="width: 100%; font-size: 20px">
+                                <el-table-column
+                                        type="index"
+                                        width="120"
+                                        label="序 号">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="userId"
+                                        align="center"
+                                        label="任务ID">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="taskName"
+                                        align="center"
+                                        label="任务名">
+                                </el-table-column>
+                                <el-table-column
+                                        align="center"
+                                        label="操 作">
+                                    <template slot-scope="scope">
+                                        <el-row>
+                                            <el-button type="danger" plain @click="removeTask(scope.row.id)">移除任务</el-button>
+                                        </el-row>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </template>
+                    </el-col>
+<!--                    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>-->
+<!--                    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>-->
+                </el-row>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+                <!--Global Javascript -->
+                <script src="../js/jquery.min.js"></script>
+                <script src="../js/popper/popper.min.js"></script>
+                <script src="../js/tether.min.js"></script>
+                <script src="../js/bootstrap.min.js"></script>
+                <script src="../js/jquery.cookie.js"></script>
+                <script src="../js/jquery.validate.min.js"></script>
+                <script src="../js/chart.min.js"></script>
+                <script src="../js/front.js"></script>
+                <script src="../js/axios-0.18.0.js" ></script>
+                <script src="../js/vue.js"></script>
+                <script src="../element-ui/lib/index.js"></script>
+                <link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+                <!--Core Javascript -->
+
+
+
+
+<script>
+    var local = window.location.host;
+    new Vue({
+        el:"#menuApp",
+        data(){
+            return{
+                user:[],
+                tasks:[],
+                taskFlows:[],
+                interval:""
+            }
+        },
+        methods: {
+            selectTaskFlow(){
+                axios({
+                    method:"get",
+                    url:"http://" + local + "/task/selectTaskFlow"
+                }).then(resp =>{
+                    console.log(resp.data);
+                    this.taskFlows = resp.data;
+                })
+            },
+            addToTaskFlow(id){
+                axios({
+                    method:"post",
+                    url:"http://" + local + "/task/addToTaskFlow",
+                    data:id
+                }).then(resp =>{
+                    this.selectTaskFlow();
+                })
+            },
+            removeTask(id){
+                console.log(id);
+                axios({
+                    method:"post",
+                    url:"http://" + local + "/task/removeTask",
+                    data:id
+                }).then(resp =>{
+                    this.selectTaskFlow();
+                })
+            },
+            beginTaskFlow(){
+                axios({
+                    method:"post",
+                    url:"http://" + local + "/task/beginTaskFlow",
+                    data:this.taskFlows
+                }).then(resp =>{
+
+                })
+            }
+        },
+
+        mounted(){
+            axios({
+                method:"get",
+                url:"http://" + local + "/task/selectAllTask"
+            }).then(resp =>{
+                console.log(resp.data);
+                this.tasks = resp.data;
+            })
+            this.selectTaskFlow();
+            axios({
+                method:"get",
+                url:"http://" + local + "/menu/hostdataservlet"
+            }).then(resp =>{
+                console.log(resp.data);
+                this.user = resp.data;
+                if(this.user.id === 15){
+                    $("#managerInfo1").show();
+                    $("#managerInfo2").show();
+                }else{
+                    $("#managerInfo1").hide();
+                    $("#managerInfo2").hide();
+                }
+            })
+        }
+    })
+
+</script>
+
+<style>
+    /*.img{position:relative;border:solid 1px #000;display:inline-block;margin:100px 100px}*/
+    .img .marker{position:absolute;width:4px;height:4px;background:#f00;}
+    .new_z_index {
+        z-index:99000 !important;
+    }
+    .el-row {
+        margin-bottom: 20px;
+    }
+    .el-col {
+        border-radius: 4px;
+    }
+    .bg-purple-dark {
+        background: #99a9bf;
+    }
+    .bg-purple {
+        background: #d3dce6;
+    }
+    .bg-purple-light {
+        background: #e5e9f2;
+    }
+    .grid-content {
+        border-radius: 4px;
+        min-height: 36px;
+    }
+    .row-bg {
+        padding: 10px 0;
+        background-color: #f9fafc;
+    }
+</style>
+
+</body>
+
+
+
+</html>

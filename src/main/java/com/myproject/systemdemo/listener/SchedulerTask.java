@@ -36,7 +36,7 @@ public class SchedulerTask {
     @Value("${weightDirectory}")
     private String weightDirectory;
 
-    @Scheduled(cron = "0 0/2 * * * *")
+    @Scheduled(cron = "0 50 * * * *")
     public void scheduled(){
         System.out.println("one time...");
     }

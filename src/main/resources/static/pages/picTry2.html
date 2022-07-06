@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-model="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跟随鼠标绘制矩形框</title>
+    <style>
+        #canvas {
+            border: 1px solid red;
+        }
+    </style>
+    <style rel="stylesheet/scss" lang="scss" scoped>
+        .rightullidiv {
+            width: 100%;
+            /*background: #f2f2f2;*/
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <script>
+        function init() {
+            //1. 获取canvas元素
+            var cv = document.getElementById("canvas");
+
+            var w = cv.width;
+            var h = cv.height;
+
+            //2. 获取2D上下文
+            var ctx = cv.getContext('2d');
+            //3. 新建一个Image对象
+            var img = new Image();
+            //4. 设置Image的src
+            img.src = "http://n.sinaimg.cn/fashion/transform/302/w472h630/20190506/ad3a-hwfpcxp2797029.jpg";
+            img.crossOrigin = '';
+            //5. 确定Image加载完毕后将Image画到canvas上
+            img.onload =  function (){
+                var iw = this.width;
+                var ih = this.height;
+                console.log(iw);
+                console.log(ih);
+                var local = calculate(iw, ih);
+                console.log(local);
+                ctx.fillStyle = 'white';
+                ctx.fill();
+                ctx.drawImage(this, local.px, local.py, local.pw, local.ph)
+                // ctx.drawImage(img, 0, 0, 600, 800);
+            }
+            function calculate(pw, ph) {
+                var px = 0;
+                var py = 0;
+                if(pw < w && ph < h){
+                    px = 0.5 * w - 0.5 * pw;
+                    py = 0.5 * h - 0.5 * ph;
+                }else if (ph / pw > h / w) {
+                    var uu = ph;
+                    ph = h
+                    pw = pw * h / uu
+                    px = 0.5 * w - 0.5 * pw;
+                } else {
+
+                    var uu = pw;
+                    pw = w;
+                    ph = ph * pw / uu
+                    py = 0.5 * h - 0.5 * ph;
+                }
+                return {px, py, pw, ph}
+            }
+        }
+
+    </script>
+</head>
+
+<body onload="init()">
+<!---->
+<div align="center" id="menuApp">
+    <canvas id="canvas"   width="1500" height="1200" ></canvas>
+    <select name="mode" id="mode">
+        <option value="point">标记关键点</option>
+        <option value="rect">绘制矩形框</option>
+    </select>
+    <button id="undo" onclick="undo()">撤销</button>
+</div>
+<script src="../js/axios-0.18.0.js" ></script>
+<script src="../js/vue.js"></script>
+<script>
+
+    var admin = new Vue({
+        el:"#menuApp",
+        data(){
+            return{
+                width:1500,
+                height:1500
+            }
+        }
+    })
+</script>
+
+
+<script>
+    const canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+        pointArray = [],
+        history = []
+
+    let dragging = false,
+        mode = 'point',
+        mousedown = null
+
+
+
+    function Point(x, y, type) {
+        this.x = x
+        this.y = y
+        this.type = type // 左击 1  右击 3
+    }
+
+    // 坐标转化为canvas坐标
+    function windowToCanvas(x, y, type) {
+        //返回元素的大小以及位置
+        var bbox = canvas.getBoundingClientRect();
+        // bbox 的宽度会加上 canvas 的 border 会影响精度
+        return new Point(x - bbox.left * (canvas.width / bbox.width),
+            y - bbox.top * (canvas.height / bbox.height), type)
+    }
+
+    function drawPoint(point) {
+        context.save()
+        context.fillStyle = point['type'] === 3 ? 'red' : 'green'
+        context.beginPath();
+        context.arc(point.x, point.y, 3, 0, Math.PI * 2, true)
+        context.fill()
+        context.font = "20px serif";
+        context.fillText((pointArray.length).toString(), point.x - 5, point.y - 10)
+        context.restore()
+        pointArray.push(point)
+        console.log(point);
+
+    }
+
+    function updateRect(point) {
+        let w = Math.abs(point.x - mousedown.x)
+        let h = Math.abs(point.y - mousedown.y)
+        let left = point.x > mousedown.x ? mousedown.x : point.x
+        let top = point.y > mousedown.y ? mousedown.y : point.y
+        context.save();
+        context.beginPath();
+        context.rect(left, top, w, h);
+        context.stroke();
+        context.restore();
+        console.log(left);
+        console.log(top);
+        console.log(w);
+        console.log(h);
+
+    }
+
+    function showLastHistory() {
+        context.putImageData(history[history.length - 1]['data'], 0, 0)
+    }
+
+    function undo() {
+        if (history.length > 1) {
+            history[history.length - 1]['mode'] === 'point' && pointArray.pop()
+            history.pop()
+            showLastHistory()
+        }
+    }
+
+    function addHistoy(data) {
+        history.push({
+            mode,
+            data: context.getImageData(0, 0, canvas.width, canvas.height)
+        })
+    }
+
+    document.getElementById('mode').onchange = function(e) {
+        mode = e.target.value
+    }
+
+    // 鼠标事件
+    canvas.onmousedown = function(e) {
+        e.preventDefault();
+        mousedown = windowToCanvas(e.clientX, e.clientY, e.which)
+        dragging = true
+    }
+
+    canvas.onmousemove = function(e) {
+        e.preventDefault();
+        if (dragging && mode === 'rect') { // 只有绘制矩形框时有效果
+            showLastHistory() // 每次绘制先清除上一次
+            updateRect(windowToCanvas(e.clientX, e.clientY, e.which))
+        }
+    }
+    addHistoy() // 添加一张默认的数据
+    canvas.onmouseup = function(e) {
+        e.preventDefault();
+        dragging = false
+        mode === 'point' && drawPoint(mousedown)
+        addHistoy() // 保存上一次数据
+
+    }
+    // 阻止页面的右击菜单栏
+    canvas.oncontextmenu = function(e) {
+        e.preventDefault()
+    }
+</script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

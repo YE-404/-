@@ -21,13 +21,43 @@
         <result column="change_date" property="changeDate"></result>
         <result column="file_size" property="fileSize"></result>
         <result column="save_path" property="savePath"></result>
-
     </resultMap>
 
     <resultMap id="SystemMap" type="com.myproject.systemdemo.domain.SystemMes">
         <result column="visitor_volume" property="visitorVolume"></result>
         <result column="user_volume" property="userVolume"></result>
         <result column="system_log_volume" property="systemLogVolume"></result>
+    </resultMap>
+
+    <resultMap id="TaskMap" type="com.myproject.systemdemo.domain.Task">
+        <result column="task_name" property="taskName"></result>
+        <result column="min_value" property="minValue"></result>
+        <result column="max_value" property="maxValue"></result>
+        <result column="zero_line" property="zeroLine"></result>
+        <result column="value_range" property="valueRange"></result>
+        <result column="task_content" property="taskContent"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="center_x" property="centerX"></result>
+        <result column="center_y" property="centerY"></result>
+    </resultMap>
+
+    <resultMap id="TaskFlowMap" type="com.myproject.systemdemo.domain.TaskFlow">
+        <result column="task_name" property="taskName"></result>
+        <result column="task_id" property="taskId"></result>
+        <result column="min_value" property="minValue"></result>
+        <result column="max_value" property="maxValue"></result>
+        <result column="zero_line" property="zeroLine"></result>
+        <result column="value_range" property="valueRange"></result>
+        <result column="task_content" property="taskContent"></result>
+        <result column="user_id" property="userId"></result>
+    </resultMap>
+
+    <resultMap id="ApparatusMap" type="com.myproject.systemdemo.domain.Apparatus">
+        <result column="task_name" property="taskName"></result>
+        <result column="task_id" property="taskId"></result>
+        <result column="save_url" property="saveUrl"></result>
+        <result column="task_content" property="taskContent"></result>
+        <result column="user_id" property="userId"></result>
     </resultMap>
 
 
@@ -71,6 +101,7 @@
         limit #{begin} , #{size}
     </select>
 
+<!---->
     <select id="selectByPageAndCondition" resultMap="indicatorResultMap">
         select * from ${type}
         <where>
@@ -109,7 +140,35 @@
                 </if>
             </if>
         </where>
+    </select>
 
+    <select id="selectApparatusByPageAndCondition" resultMap="ApparatusMap">
+        select * from ${type}
+        <where>
+            <if test="search.type != null and search.type !=''">
+                <if test="search.type == 'TaskName'">
+                    task_name like #{search.content}
+                </if>
+                <if test="search.type == 'TaskContent'">
+                    task_content = #{search.content}
+                </if>
+            </if>
+        </where>
+        limit #{begin} , #{size}
+    </select>
+
+    <select id="selectApparatusTotalCountByCondition" resultType="java.lang.Integer">
+        select count(*) from ${type}
+        <where>
+            <if test="search.type != null and search.type !=''">
+                <if test="search.type == 'TaskContent'">
+                    task_content like #{search.content}
+                </if>
+                <if test="search.type == 'TaskName'">
+                    task_name like #{search.content}
+                </if>
+            </if>
+        </where>
     </select>
 
 </mapper>

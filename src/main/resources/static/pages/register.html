@@ -67,7 +67,7 @@
 <!--            onblur="if (this.value == '') {this.value = 'Password';}"-->
         </div>
         <font color="red">{{message}}</font><br>
-        <input type="text1" class="text1" name = "checkCode" id = "checkCode" v-model="user.checkCode"/>
+        <input type="text" class="text1" name = "checkCode" id = "checkCode" v-model="user.checkCode"/>
         <a href="#" id="changImg" @click="checkCode">看不清，换一张</a>
         <img id="checkCodeImg" src="/user/checkcodeservlet">
 
@@ -76,7 +76,7 @@
                 <input type="button" value="Register"  @click="submit">
 <!--                -->
             </div>
-            <a href="/user/logincover">已有账号，去登录</a>
+            <a href="/pages/login.html">已有账号，去登录</a>
     </form>
 </div>
 </div>
@@ -94,9 +94,7 @@
             return{
                 message:"",
                 user: {},
-                url:checkCode,
                 avatarUrl:"http://" + ip + "/Avatar/avatar.jpg"
-
             }
         },
         methods:{

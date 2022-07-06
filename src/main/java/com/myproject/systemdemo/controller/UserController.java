@@ -2,6 +2,7 @@ package com.myproject.systemdemo.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.myproject.systemdemo.SubscribeSample;
 import com.myproject.systemdemo.domain.Log;
 import com.myproject.systemdemo.domain.SaveUserLogin;
 import com.myproject.systemdemo.domain.User;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -54,6 +56,9 @@ public class UserController {
     @Autowired
     private DateAnalyze dateAnalyze;
 
+    @Autowired
+    private SubscribeSample subscribeSample;
+
     @Value(value = "${address}")
     private String address;
 
@@ -71,10 +76,11 @@ public class UserController {
 
     @RequestMapping(value = "/logincheck", method = RequestMethod.POST)
     @ResponseBody
-    public String login(HttpServletRequest req, HttpServletResponse res, HttpSession session) throws IOException {
-        res.setContentType("text/json;charset=utf-8");
-        BufferedReader br = req.getReader();
-        String params = br.readLine();
+    public String login(@RequestBody String params, HttpSession session) throws IOException {
+//        res.setContentType("text/json;charset=utf-8");
+//        BufferedReader br = req.getReader();
+//        String params = br.readLine();
+        System.out.println("-----ceshiGet:" + params);
         User userInput = JSON.parseObject(params, User.class);
         String username = userInput.getUsername();
         String password = userInput.getPassword();
@@ -113,21 +119,16 @@ public class UserController {
 
 
     @RequestMapping(value = "/registercover", method = RequestMethod.GET)
-    public String registercover(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        //DataSourceHolder.setDataSource("1");
+    public String registercover(){
         return "register";
     }
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public String register(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        res.setContentType("text/json;charset=utf-8");
-        BufferedReader br = req.getReader();
-        String params = br.readLine();
+    public String register(@RequestBody String params, HttpSession session) throws IOException {
         JSONObject jsonObj = JSON.parseObject(params);
         String username = jsonObj.getString("username");
         String password = jsonObj.getString("password");
         String checkCode = jsonObj.getString("checkCode");
-        HttpSession session = req.getSession();
         String checkCodeGen = (String) session.getAttribute("checkCodeGen");
         String avatar = (String) session.getAttribute("avatar");
         if(checkCodeGen!=null&&!checkCodeGen.equalsIgnoreCase(checkCode)){
@@ -165,10 +166,10 @@ public class UserController {
     }
     @RequestMapping(value = "/registercheck", method = RequestMethod.POST)
     @ResponseBody
-    public String registerCheck(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        res.setContentType("text/json;charset=utf-8");
-        BufferedReader br = req.getReader();
-        String params = br.readLine();
+    public String registerCheck(@RequestBody String params, HttpSession session) throws IOException {
+//        res.setContentType("text/json;charset=utf-8");
+//        BufferedReader br = req.getReader();
+//        String params = br.readLine();
         JSONObject jsonObj = JSON.parseObject(params);
         String username = jsonObj.getString("username");
         String password = jsonObj.getString("password");
@@ -203,7 +204,9 @@ public class UserController {
         dateAnalyze.addLoginTimes();                                                            //对应星期访问加1
         SaveUserLogin.getMap().put(String.valueOf(userId),user.getUsername());                  //登录用户信息
         logDemo.writeLog(String.valueOf(userId),"Login in");                         //写日志
-        return "redirect:/menu/hostservlet";
+        //subscribeSample.subscribe(subscribeSample.productClient("tcp://127.0.0.1:1883",userId + "-robot"),userId + "-target");
+//        subscribeSample.subscribe(userId + "-robot",userId + "-target",userId);
+        return "redirect:/pages/host.html";
     }
     @RequestMapping(value = "/checkcodeservlet", method = RequestMethod.GET)
     @ResponseBody

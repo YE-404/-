@@ -22,10 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Encoder;
 
@@ -36,6 +33,7 @@ import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -58,7 +56,6 @@ public class LightController {//extends thriftTools
     AmqpTemplate amqpTemplate;
 
     private String elementType = "_lights";
-//    ThriftClient client = new ThriftClient();
 
     @RequestMapping(value = "/deleteServlet", method = RequestMethod.POST)
     @ResponseBody
@@ -67,7 +64,7 @@ public class LightController {//extends thriftTools
         BufferedReader br = req.getReader();
         String params = br.readLine();
         Integer userId = (Integer) session.getAttribute("userId");
-        String searchType = String.valueOf(userId) + elementType;
+        String searchType = userId + elementType;
         if(params!=null && params != "") {
             try{
                 userMapper.deleteById(searchType, Integer.valueOf(params));
@@ -158,48 +155,59 @@ public class LightController {//extends thriftTools
     }
     @RequestMapping(value = "/analyzeLight", method = RequestMethod.POST)
     @ResponseBody
-    public String analyzeLight(@RequestParam("file") MultipartFile uploadFile, Upload upload, HttpServletResponse res, HttpSession session)  throws ServletException, IOException{
+    public String analyzeLight(@RequestParam("file") MultipartFile uploadFile,  Upload upload, HttpSession session)  throws ServletException, IOException{
         //String data = "";
+
+        System.out.println(upload);
+        System.out.println("file is empty?  " + uploadFile.isEmpty());
         String getResult1 = "";
-        String getResult2 = "";
         List<String> getResult = new ArrayList<>();
-        String class_ = "";
-        Integer userId = (Integer) session.getAttribute("userId");
+        StringBuilder class_ = new StringBuilder();
+        //Integer userId = (Integer) session.getAttribute("userId");
+        Integer userId = 15;
         String searchTypeLight = userId + "_lights";
         String searchTypeSwitch = userId + "_switchs";
         String searchType = "";
         List<Indicator> indicatorsTotal = new ArrayList<>();
         if (!uploadFile.isEmpty()) {
+
             BASE64Encoder encoder = new BASE64Encoder();
             // 通过base64来转化图片
             String data = encoder.encode(uploadFile.getBytes());
+            System.out.println("ready");
             String optionsRadios = upload.getOptionsRadios();
             String[] checkedLights = upload.getCheckedLights();
             String[] checkedSwitches = upload.getCheckedSwitches();//checkedSwitches
-            if(checkedSwitches != null){
-                getResult2 = client.getResult(data,"switch",checkedSwitches,String.valueOf(userId));
-                if(getResult2.equals("NoIndicator") || getResult2.equals("NoInside")) return "lackWeight";
-            }
-            if(checkedLights != null){
+
+            if(checkedSwitches != null&&checkedLights != null){
+                String[] list = new String[checkedSwitches.length + checkedLights.length];
+                System.arraycopy(checkedSwitches, 0, list, 0, checkedSwitches.length);
+                System.arraycopy(checkedLights, 0, list, checkedSwitches.length, checkedLights.length);
+                System.out.println(Arrays.toString(list));
+                getResult1 = client.getResult(data,"switch+light",list,String.valueOf(userId));
+                if(getResult1.equals("NoIndicator") || getResult1.equals("NoInside")) return "lackWeight";
+            }else if(checkedLights != null){
                 getResult1 = client.getResult(data,"light",checkedLights,String.valueOf(userId));
+            }else if(checkedSwitches != null){
+                getResult1 = client.getResult(data,"switch",checkedSwitches,String.valueOf(userId));
             }
+
             getResult.add(getResult1);
-            getResult.add(getResult2);
             for(int i=0;i<getResult.size();i++) {
-                class_ = "";
+                class_ = new StringBuilder();
                 if(i == 0){ searchType = searchTypeLight; }
                 else if(i == 1){ searchType = searchTypeSwitch; }
                 Indicator[] indicators = JSON.parseObject(getResult.get(i), Indicator[].class);
                 if(indicators.length == 1 && indicators[0].getClass_() == null) continue;
                 for(Indicator j : indicators){
                     indicatorsTotal.add(j);
-                    class_ += j.getClass_() + " ";
+                    class_.append(j.getClass_()).append(" ");
                 }
                 logDemo.writeLog(String.valueOf(userId),"detect " + "[ Indicator ]" + " - " + class_);
                 if("yes".equals(optionsRadios)){
                     amqpTemplate.convertAndSend(RabbitMQConfig.QUEUE, "insertTry");//RabbitMQConfig.QUEUE
                     try{
-                        userMapper.addIndicator(searchType,class_);
+                        userMapper.addIndicator(searchType, class_.toString());
                         logDemo.writeLog(String.valueOf(userId),"insert " + "[" + searchType + "]" + " - " + class_);
                     }catch (Exception e){
                         logDemo.writeLog(String.valueOf(userId),"insert " + "[" + searchType + "]" + " failed");
@@ -207,8 +215,7 @@ public class LightController {//extends thriftTools
                     }
                 }
             }
-            String jsonString = JSON.toJSONString(indicatorsTotal);
-            return jsonString;
+            return JSON.toJSONString(indicatorsTotal);
         }
         return "noFile";
     }

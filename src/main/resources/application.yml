@@ -37,6 +37,10 @@ server:
   servlet:
     session:
       timeout: 1800
+
+
+
+
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
   type-aliases-package: com.myproject.systemdemo.domain
@@ -48,6 +52,8 @@ netWeightStore: http://127.0.0.1/weights/store/
 weightTempStore: /home/sy/IMAGE/weights/store_temp/
 userLog: /home/sy/IMAGE/log/user/
 masterDirectory: /home/sy/IMAGE/
+taskDirectory: /home/sy/IMAGE/task/
+netTaskStore: http://127.0.0.1/task/
 avatarDirectory: /home/sy/IMAGE/Avatar/
 systemInfo: /home/sy/IMAGE/log/system/
 darknetPath: /home/sy/IMAGE/darknet-master/scripts/VOCdevkit/

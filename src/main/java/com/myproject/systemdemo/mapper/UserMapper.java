@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper
@@ -56,11 +57,6 @@ public interface UserMapper {
     @ResultMap("userResultMap")
     void addClockIndicator(@Param("type") String type,@Param("class") String class_,@Param("result") String result);
 
-//    @Select("select * from ${type} ")
-//    @ResultMap("indicatorResultMap")
-//    List<Indicator> selectAllIndicator(@Param("type") String type);
-
-
     @Select("select * from ${type} where id = #{id}")
     @ResultMap("indicatorResultMap")
     List<Indicator> selectByIdIndicator(@Param("type") String type, @Param("id") Integer id);
@@ -70,7 +66,7 @@ public interface UserMapper {
     List<Indicator> selectByClassIndicator(@Param("type") String type, @Param("class") String class_);
 
     @Delete("delete from ${type} where id = #{id}")
-    @ResultMap("indicatorResultMap")
+    //@ResultMap("indicatorResultMap")
     void deleteById(@Param("type") String type, @Param("id") Integer id);
 
     void deleteIds(@Param("type") String type, @Param("ids") Integer[] ids);
@@ -82,12 +78,82 @@ public interface UserMapper {
     @Select("select count(*) from ${type}")
     int selectTotalCount(@Param("type") String type);
 
-
     List<Indicator> selectByPageAndCondition(@Param("type") String type, @Param("begin") int begin, @Param("size") int size, @Param("search") Search search);
-
 
     int selectTotalCountByCondition(@Param("type") String type, @Param("search") Search search);
 
+//--------------------------------------------apparatus----------------------------------------------------------
+    @Insert("insert into ${type} values(null,#{apparatus.taskId},#{apparatus.userId}," +
+            "#{apparatus.taskName},#{apparatus.taskContent},#{apparatus.result},now(),#{apparatus.saveUrl})")
+    @ResultMap("ApparatusMap")
+    void addApparatus(@Param("type") String type,Apparatus apparatus);
+
+    @Select("select * from ${type} where id = #{id}")
+    @ResultMap("ApparatusMap")
+    Apparatus selectApparatusById(@Param("type") String type, @Param("id") Integer id);
+
+    @Select("select * from ${type} where task_name like #{TaskName}")
+    @ResultMap("ApparatusMap")
+    List<Apparatus> selectApparatusByTaskName(@Param("type") String type, @Param("TaskName") String TaskName);
+
+    @Select("select * from ${type} where task_content like #{TaskContent}")
+    @ResultMap("ApparatusMap")
+    List<Apparatus> selectApparatusByTaskContent(@Param("type") String type, @Param("TaskContent") String TaskContent);
+
+    List<Apparatus> selectApparatusByPageAndCondition(@Param("type") String type, @Param("begin") int begin, @Param("size") int size, @Param("search") Search search);
+
+    int selectApparatusTotalCountByCondition(@Param("type") String type, @Param("search") Search search);
+//--------------------------------------------task----------------------------------------------------------
+
+    @Select("select * from ${type} where id = #{id}")
+    @ResultMap("TaskMap")
+    Task selectTaskById(@Param("type") String type, @Param("id") Integer id);
+
+    @Select("select * from ${type} where task_name = #{taskName}")
+    @ResultMap("TaskMap")
+    Task selectTaskByTaskName(@Param("type") String type, @Param("taskName") String taskName);
+
+    @Select("select * from ${type} where id = #{id}")
+    @ResultMap("TaskFlowMap")
+    TaskFlow selectTaskFlowById(@Param("type") String type, @Param("id") Integer id);
+
+
+
+    @Select("select position from ${type} where id = #{id}")
+    String selectTaskPositionById(@Param("type") String type, @Param("id") Integer id);
+
+
+    @Select("select * from ${type};")
+    @ResultMap("TaskMap")
+    List<Task> selectAllTask(@Param("type") String type);
+
+    @Select("select * from ${type};")
+    @ResultMap("TaskMap")
+    List<TaskFlow> selectTaskFlow(@Param("type") String type);
+
+
+    @Select("select * from ${type} limit #{begin},#{size}")
+    @ResultMap("TaskMap")
+    List<Task> selectTaskByPage(@Param("type") String type,@Param("begin") int begin, @Param("size") int size);
+
+    @Insert("INSERT into ${type} values(null,#{taskName},#{position},#{picture},null,null,null,null,#{taskContent},#{userId},null,null)")
+    @ResultMap("TaskMap")
+    boolean addTask(@Param("type") String type, @Param("taskName") String taskName,
+                 @Param("position") String position, @Param("picture") String picture,
+                    @Param("taskContent") String taskContent,@Param("userId") Integer userId);
+
+    @Insert("INSERT into ${type} values(null,#{task.id},#{task.taskName},#{task.position},#{task.picture}," +
+            "#{task.minValue},#{task.maxValue},#{task.zeroLine},#{task.valueRange},#{task.taskContent},#{task.userId})")
+    @ResultMap("TaskFlowMap")
+    boolean addTaskTOFlow(@Param("type") String type, Task task);
+
+
+    @Update("update ${type} set min_value=#{minValue},max_value=#{maxValue},zero_line=#{zeroLine}," +
+            "value_range=#{valueRange},center_x=#{centerX},center_y=#{centerY} where id = #{id}")
+//    @ResultMap("TaskMap")
+    void updateTask(@Param("type") String type, @Param("minValue") double minValue,@Param("maxValue") double maxValue,
+                    @Param("zeroLine") double zeroLine,@Param("valueRange") double valueRange,
+                    @Param("centerX") double centerX,@Param("centerY") double centerY,@Param("id") Integer id);
 
 //----------------------------------------------log-----------------------------------------------------------
     @Insert("INSERT into userlogs values(null,#{userId},#{username},now(),now(),#{fileSize},#{savePath})")

@@ -25,11 +25,11 @@ public class User {
         this.registerTime = registerTime;
     }
 
-    public java.lang.String getAvatarUrl() {
+    public String getAvatarUrl() {
         return avatarUrl;
     }
 
-    public void setAvatarUrl(java.lang.String avatarUrl) {
+    public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
 

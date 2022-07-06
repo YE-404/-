@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-model="" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="robots" content="all,follow"/>
+    <title></title>
+    <link rel="shortcut icon" href="img/favicon.ico"/>
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"/>
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../css/font-icon-style.css"/>
+    <link rel="stylesheet" href="../css/style.default.css" id="theme-stylesheet"/>
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="../css/form.css"/>
+    <link rel="stylesheet" href="../css/card.css"/>
+    <title>跟随鼠标绘制矩形框</title>
+    <style>
+        #canvas {
+            border: 1px solid red;
+        }
+        .el-table .warning-row {
+            background: oldlace;
+        }
+
+        .el-table .success-row {
+            background: #f0f9eb;
+        }
+    </style>
+    <script>
+        function init(src) {
+            //1. 获取canvas元素
+            var cv = document.getElementById("canvas");
+            var w = cv.width;
+            var h = cv.height;
+            //2. 获取2D上下文
+            var ctx = cv.getContext('2d');
+            //3. 新建一个Image对象
+            var img = new Image();
+            //4. 设置Image的src
+            img.src = src;
+            img.crossOrigin = '';
+            //5. 确定Image加载完毕后将Image画到canvas上
+            img.onload =  function (){
+                var iw = this.width;
+                var ih = this.height;
+                var local = calculate(iw, ih);
+                ctx.fillStyle = 'white';
+                ctx.fill();
+                ctx.drawImage(this, local.px, local.py, local.pw, local.ph)
+                // ctx.drawImage(img, 0, 0, 600, 800);
+            }
+            function calculate(pw, ph) {
+                var px = 0;
+                var py = 0;
+                if(pw < w && ph < h){
+                    px = 0.5 * w - 0.5 * pw;
+                    py = 0.5 * h - 0.5 * ph;
+                }else if (ph / pw > h / w) {
+                    var uu = ph;
+                    ph = h
+                    pw = pw * h / uu
+                    px = 0.5 * w - 0.5 * pw;
+                } else {
+                    var uu = pw;
+                    pw = w;
+                    ph = ph * pw / uu
+                    py = 0.5 * h - 0.5 * ph;
+                }
+                return {px, py, pw, ph}
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+<div id="menuApp">
+<header class="header">
+    <nav class="navbar navbar-expand-lg ">
+        <div class="search-box">
+            <button class="dismiss"><i class="icon-close"></i></button>
+            <form id="searchForm" action="#" role="search">
+                <input type="search" placeholder="Search Now" class="form-control">
+            </form>
+        </div>
+        <div class="container-fluid ">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+                <div class="navbar-header">
+                    <a href="hostservlet" class="navbar-brand">
+                        <div class="brand-text brand-big hidden-lg-down"><img src="../img/logo-white.png" alt="Logo" class="img-fluid"></div>
+                        <div class="brand-text brand-small"><img src="../img/logo-icon.png" alt="Logo" class="img-fluid"></div>
+                    </a>
+                    <a id="toggle-btn" href="#" class="menu-btn active">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+            <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                <li class="nav-item dropdown"><a id="profile" class="nav-link logout" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle" style="height: 30px; width: 30px;"></a>
+                    <ul aria-labelledby="profile" class="dropdown-menu profile">
+
+                        <li>
+                            <a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                <div class="msg-profile"> <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"></div>
+                                <div class="msg-body">
+                                    <h3 class="h5">{{user.username}}</h3>
+                                </div>
+                            </a>
+                            <hr>
+                        </li>
+
+                        <li>
+                            <a rel="nofollow" href="profile" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-user "></i>用户基本信息</div>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a rel="nofollow" href="logout" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-power-off"></i>注销</div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+
+<div class="page-content d-flex align-items-stretch">
+    <!--***** SIDE NAVBAR *****-->
+    <nav class="side-navbar">
+        <div class="sidebar-header d-flex align-items-center" >
+            <div class="avatar">
+                <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"/>
+                <!--     "../img/avatar-1.jpg"           -->
+            </div>
+            <div class="title">
+                <h1 class="h4">{{user.username}}</h1>
+            </div>
+        </div>
+        <hr/>
+        <!-- Sidebar Navidation Menus-->
+        <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+        <ul class="list-unstyled">
+            <li class="active"><a href="host.html"><i class="icon-home"></i>主页</a></li>
+            <li><a href="#forms" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-building-o"></i>检测功能 </a>
+                <ul id="forms" class="collapse list-unstyled">
+                    <li><a href="uploadLight.html">开关/彩灯识别</a></li>
+                    <li><a href="uploadClock.html">数显/指针表识别</a></li>
+                </ul>
+            </li>
+            <li><a href="spell.html"> <i class="fa fa-map-o"></i>图像拼接 </a></li>
+            <li><a href="#apps" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>数据库查询</a>
+
+            <li><a href="tableTask.html"> <i class="fa fa-map-o"></i>任务点 </a></li>
+            <ul id="apps" class="collapse list-unstyled">
+                <li><a href="tableLight.html">彩灯数据库</a></li>
+                <li><a href="tableSwitch.html">开关数据库</a></li>
+                <li><a href="tableNumber.html">数显表数据库</a></li>
+                <li><a href="tablePoint.html">指针表数据库</a></li>
+            </ul>
+            </li>
+            <li><a href="#pages" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-file-o"></i>模型管理 </a>
+                <ul id="pages" class="collapse list-unstyled">
+                    <li><a href="weightSelf.html">我的模型</a></li>
+                    <li><a href="weightStore.html">模型仓库</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <span class="heading" id="managerInfo1">管理员功能</span>
+        <ul class="list-unstyled" id="managerInfo2" >
+            <li><a href="manage.html"> <i class="fa fa-globe"></i>系统管理</a></li>
+            <li><a href="LogManage.html"> <i class="fa fa-file-o"></i>日志管理</a></li>
+        </ul>
+    </nav>
+    <div class="content-inner form-cont">
+        <div class="row">
+
+            <div class="col-md-12" id="form" align="center">
+                    <canvas id="canvas"   width="1500" height="1200" ></canvas>
+                    <select name="mode" id="mode">
+                        <option value="point">标记关键点</option>
+                        <option value="rect">绘制矩形框</option>
+                    </select>
+                    <button id="undo" onclick="undo()">撤销</button>
+                    <el-button type="success" @click="submit()">添加</el-button></br>
+
+                    <el-dialog title="该点刻度值" :visible.sync="open1" :close-on-click-modal="false" :close-on-press-escape="false">
+                        <el-input v-model="number" placeholder="请输入该点刻度值"></el-input><br><br>
+                        <div align="right">
+                            <input type="button" class="btn btn-outline-primary" @click="addPointNumber()" value="确 定">
+                            <input type="button" class="btn btn-outline-secondary" @click="cancelPoint()" value="取 消">
+                        </div>
+                    </el-dialog>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!---->
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/popper/popper.min.js"></script>
+<script src="../js/tether.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/jquery.cookie.js"></script>
+<script src="../js/jquery.validate.min.js"></script>
+<script src="../js/chart.min.js"></script>
+<script src="../js/front.js"></script>
+<script src="../js/axios-0.18.0.js" ></script>
+<script src="../js/vue.js"></script>
+<script src="../element-ui/lib/index.js"></script>
+<link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+<script>
+    var beginMark = false;
+    var open1 = false;
+    var local = window.location.host;
+    var admin = new Vue({
+        el:"#menuApp",
+
+        data(){
+            return{
+                open1:false,
+                number:0.0,
+                width:1500,
+                height:1500,
+                user:[],
+                tasks:[],
+                temPoint:{
+                    x:0,
+                    y:0
+                },
+                picUrl:"",
+                src:"http://127.0.0.1/task/15/2022-06-23 10:50:51.jpg",//http://n.sinaimg.cn/fashion/transform/302/w472h630/20190506/ad3a-hwfpcxp2797029.jpg
+                ct:{
+                    x:0.0,
+                    y:0.0,
+                    w:0.0,
+                    h:0.0
+                },
+                result:{
+                    id:"",
+                    min:{
+                        value:"",
+                        x:"",
+                        y:"",
+                    },
+                    middle:{
+                        value:"",
+                        x:"",
+                        y:"",
+                    },
+                    max:{
+                        value:"",
+                        x:"",
+                        y:"",
+                    },
+                },
+            }
+        },
+        methods:{
+            submit(){
+                if(pointArray.length < 3 || Object.keys(rect).length === 0){
+                    console.log("lose element!");
+                    return;
+                }
+                pointArray.sort(function(a,b){return a.value-b.value});
+                this.result.min = pointArray[0]
+                this.result.middle = pointArray[1]
+                this.result.max = pointArray[2]
+                this.rect = rect
+                console.log(this.rect);
+                console.log(this.result);
+
+            },
+            openText(){
+                this.open1 = true;
+            },
+            addPointNumber(){
+                this.open1 = false;
+                pointArray[pointArray.length-1].value = this.number;
+            },
+            cancelPoint(){
+                window.undo();
+                this.open1 = false;
+                console.log("cancel!");
+            }
+        },
+        mounted(){
+            var url = window.location.href;
+            var num=url.indexOf("=")
+            var id =url.substr(num+1);
+            window.addPointNunber = this.addPointNunber;
+            window.openText = this.openText;
+            window.init(this.src);
+
+
+            axios({
+                method:"post",
+                url:"http://" + local + "/task/convertToPic",
+                data: id
+            }).then(resp =>{
+                this.tasks = resp.data;
+            })
+            axios({
+                method:"get",
+                url:"http://" + local + "/menu/hostdataservlet"
+            }).then(resp =>{
+                this.user = resp.data;
+                if(this.user.id === 15){
+                    $("#managerInfo1").show();
+                    $("#managerInfo2").show();
+                }else{
+                    $("#managerInfo1").hide();
+                    $("#managerInfo2").hide();
+                }
+            })
+
+        }
+    })
+</script>
+
+
+<script>
+    var rect={}
+    const canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+        pointArray = [],
+        history = []
+    let dragging = false,
+        mode = 'point',
+        mousedown = null
+    function Point(x, y, type, value) {
+        this.x = x
+        this.y = y
+        this.type = type // 左击 1  右击 3
+        this.value = value;
+    }
+    function Rect(x,y,w,h){
+        this.x = x
+        this.y = y
+        this.w = w // 左击 1  右击 3
+        this.h = h;
+    }
+    // 坐标转化为canvas坐标
+    function windowToCanvas(x, y, type) {
+        //返回元素的大小以及位置
+        var bbox = canvas.getBoundingClientRect();
+        // bbox 的宽度会加上 canvas 的 border 会影响精度
+        return new Point(x - bbox.left * (canvas.width / bbox.width),
+            y - bbox.top * (canvas.height / bbox.height), type)
+    }
+    function drawPoint(point) {
+        if(pointArray.length >= 3) {
+            alert("标注刻度点已满");
+            return;
+        }
+        openText();
+        context.save()
+        context.fillStyle = point['type'] === 3 ? 'red' : 'green'
+        context.beginPath();
+        context.arc(point.x, point.y, 3, 0, Math.PI * 2, true)
+        context.fill()
+        context.font = "20px serif";
+        context.fillText((pointArray.length).toString(), point.x - 5, point.y - 10)
+        context.restore()
+        pointArray.push(point)
+        console.log(point);
+        return point;
+    }
+
+    function updateRect(point) {
+        let w = Math.abs(point.x - mousedown.x)
+        let h = Math.abs(point.y - mousedown.y)
+        let left = point.x > mousedown.x ? mousedown.x : point.x
+        let top = point.y > mousedown.y ? mousedown.y : point.y
+        context.save();
+        context.beginPath();
+        context.rect(left, top, w, h);
+        context.stroke();
+        context.restore();
+        rect = new Rect(left,top,w,h);
+
+    }
+
+    function showLastHistory() {
+        context.putImageData(history[history.length - 1]['data'], 0, 0)
+    }
+
+    function undo() {
+        if (history.length > 1) {
+            history[history.length - 1]['mode'] === 'point' && pointArray.pop()
+            if(history[history.length - 1]['mode'] === 'rect') rect = {};
+            history.pop()
+            showLastHistory();
+        }
+    }
+
+    function addHistoy(data) {
+        history.push({
+            mode,
+            data: context.getImageData(0, 0, canvas.width, canvas.height)
+        })
+    }
+
+    document.getElementById('mode').onchange = function(e) {
+        mode = e.target.value
+    }
+
+    // 鼠标事件
+    canvas.onmousedown = function(e) {
+        e.preventDefault();
+        mousedown = windowToCanvas(e.clientX, e.clientY, e.which)
+        dragging = true
+    }
+
+    canvas.onmousemove = function(e) {
+        e.preventDefault();
+        if (dragging && mode === 'rect') { // 只有绘制矩形框时有效果
+            showLastHistory() // 每次绘制先清除上一次
+            updateRect(windowToCanvas(e.clientX, e.clientY, e.which))
+        }
+    }
+    addHistoy() // 添加一张默认的数据
+    canvas.onmouseup = function(e) {
+        e.preventDefault();
+        dragging = false
+        mode === 'point' && drawPoint(mousedown)
+        addHistoy() // 保存上一次数据
+
+    }
+    // 阻止页面的右击菜单栏
+    canvas.oncontextmenu = function(e) {
+        e.preventDefault()
+    }
+</script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

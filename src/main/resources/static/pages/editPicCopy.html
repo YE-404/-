@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:V-model="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="robots" content="all,follow"/>
+    <title></title>
+    <link rel="shortcut icon" href="img/favicon.ico"/>
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"/>
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../css/font-icon-style.css"/>
+    <link rel="stylesheet" href="../css/style.default.css" id="theme-stylesheet"/>
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="../css/form.css"/>
+    <link rel="stylesheet" href="../css/card.css"/>
+
+    <style>
+        .el-table .warning-row {
+            background: oldlace;
+        }
+
+        .el-table .success-row {
+            background: #f0f9eb;
+        }
+    </style>
+
+
+</head>
+<body>
+<div id="menuApp">
+<!--====================================================
+                   MAIN NAVBAR
+======================================================-->
+<header class="header">
+    <nav class="navbar navbar-expand-lg ">
+        <div class="search-box">
+            <button class="dismiss"><i class="icon-close"></i></button>
+            <form id="searchForm" action="#" role="search">
+                <input type="search" placeholder="Search Now" class="form-control">
+            </form>
+        </div>
+        <div class="container-fluid ">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+                <div class="navbar-header">
+                    <a href="hostservlet" class="navbar-brand">
+                        <div class="brand-text brand-big hidden-lg-down"><img src="../img/logo-white.png" alt="Logo" class="img-fluid"></div>
+                        <div class="brand-text brand-small"><img src="../img/logo-icon.png" alt="Logo" class="img-fluid"></div>
+                    </a>
+                    <a id="toggle-btn" href="#" class="menu-btn active">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+            <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                <li class="nav-item dropdown"><a id="profile" class="nav-link logout" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle" style="height: 30px; width: 30px;"></a>
+                    <ul aria-labelledby="profile" class="dropdown-menu profile">
+
+                        <li>
+                            <a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                <div class="msg-profile"> <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"></div>
+                                <div class="msg-body">
+                                    <h3 class="h5">{{user.username}}</h3>
+                                </div>
+                            </a>
+                            <hr>
+                        </li>
+
+                        <li>
+                            <a rel="nofollow" href="profile" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-user "></i>用户基本信息</div>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a rel="nofollow" href="logout" class="dropdown-item">
+                                <div class="notification">
+                                    <div class="notification-content"><i class="fa fa-power-off"></i>注销</div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<!--====================================================
+                  PAGE CONTENT
+======================================================-->
+<div class="page-content d-flex align-items-stretch">
+    <!--***** SIDE NAVBAR *****-->
+    <nav class="side-navbar">
+        <div class="sidebar-header d-flex align-items-center" >
+            <div class="avatar">
+                <img v-bind:src= "user.avatarUrl" alt="..." class="img-fluid rounded-circle"/>
+                <!--     "../img/avatar-1.jpg"           -->
+            </div>
+            <div class="title">
+                <h1 class="h4">{{user.username}}</h1>
+            </div>
+        </div>
+        <hr/>
+        <!-- Sidebar Navidation Menus-->
+        <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+        <ul class="list-unstyled">
+            <li class="active"><a href="host.html"><i class="icon-home"></i>主页</a></li>
+            <li><a href="#forms" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-building-o"></i>检测功能 </a>
+                <ul id="forms" class="collapse list-unstyled">
+                    <li><a href="uploadLight.html">开关/彩灯识别</a></li>
+                    <li><a href="uploadClock.html">数显/指针表识别</a></li>
+                </ul>
+            </li>
+            <li><a href="spell.html"> <i class="fa fa-map-o"></i>图像拼接 </a></li>
+            <li><a href="#apps" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>数据库查询</a>
+
+            <li><a href="tableTask.html"> <i class="fa fa-map-o"></i>任务点 </a></li>
+            <ul id="apps" class="collapse list-unstyled">
+                <li><a href="tableLight.html">彩灯数据库</a></li>
+                <li><a href="tableSwitch.html">开关数据库</a></li>
+                <li><a href="tableNumber.html">数显表数据库</a></li>
+                <li><a href="tablePoint.html">指针表数据库</a></li>
+            </ul>
+            </li>
+            <li><a href="#pages" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-file-o"></i>模型管理 </a>
+                <ul id="pages" class="collapse list-unstyled">
+                    <li><a href="weightSelf.html">我的模型</a></li>
+                    <li><a href="weightStore.html">模型仓库</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <span class="heading" id="managerInfo1">管理员功能</span>
+        <ul class="list-unstyled" id="managerInfo2" >
+            <li><a href="manage.html"> <i class="fa fa-globe"></i>系统管理</a></li>
+            <li><a href="LogManage.html"> <i class="fa fa-file-o"></i>日志管理</a></li>
+        </ul>
+    </nav>
+    <div class="content-inner form-cont">
+        <div class="row">
+
+            <div class="col-md-12" id="form" align="center">
+
+                <h3>图片坐标及量程标定</h3></br>
+                <!--      添加最小          -->
+                <span class="demonstration">最小刻度值： </span>
+                <el-input placeholder="请输入刻度" v-model="result.min.value" style="width:105px"></el-input>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="demonstration">x： </span>
+                <el-input placeholder=""  v-model="result.min.x" :disabled="true" style="width:100px"></el-input>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="demonstration">y： </span>
+                <el-input placeholder=""  v-model="result.min.y" :disabled="true" style="width:100px"></el-input>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <el-button type="primary" @click="addMinXY()">添加</el-button>
+                <el-button type="danger" @click="clearMinXY()">清除</el-button></br></br>
+                <!--      添加中等小          -->
+                <span class="demonstration">中间刻度值： </span>
+                <el-input placeholder="请输入刻度" v-model="result.middleS.value" style="width:105px"></el-input>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="demonstration">x： </span>
+                <el-input placeholder=""  v-model="result.middleS.x" :disabled="true" style="width:100px"></el-input>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="demonstration">y： </span>
+                <el-input placeholder=""  v-model="result.middleS.y" :disabled="true" style="width:100px"></el-input>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <el-button type="primary" @click="addMiddleSXY()">添加</el-button>
+                <el-button type="danger" @click="clearMiddleSXY()">清除</el-button></br></br>
+                <!--      添加中等大          -->
+                <span class="demonstration">中间刻度值： </span>
+                <el-input placeholder="请输入刻度" v-model="result.middleL.value" style="width:105px"></el-input>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="demonstration">x： </span>
+                <el-input placeholder=""  v-model="result.middleL.x" :disabled="true" style="width:100px"></el-input>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="demonstration">y： </span>
+                <el-input placeholder=""  v-model="result.middleL.y" :disabled="true" style="width:100px"></el-input>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <el-button type="primary" @click="addMiddleLXY()">添加</el-button>
+                <el-button type="danger" @click="clearMiddleLXY()">清除</el-button></br></br>
+                <!--      添加最大          -->
+                <span class="demonstration">最大刻度值： </span>
+                <el-input placeholder="请输入刻度" v-model="result.max.value" style="width:105px"></el-input>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="demonstration">x： </span>
+                <el-input placeholder=""  v-model="result.max.x" :disabled="true" style="width:100px"></el-input>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="demonstration">y： </span>
+                <el-input placeholder=""  v-model="result.max.y" :disabled="true" style="width:100px"></el-input>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <el-button type="primary" @click="addMaxXY()">添加</el-button>
+                <el-button type="danger" @click="clearMaxXY()">清除</el-button></br></br>
+
+                <el-button type="success" @click="submit()">添加</el-button></br>
+
+                <div class="img" id="dv">
+                    <img  id="LiuYiFeiImg" v-bind:src=tasks.picture></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+                <!--Global Javascript -->
+                <script src="../js/jquery.min.js"></script>
+                <script src="../js/popper/popper.min.js"></script>
+                <script src="../js/tether.min.js"></script>
+                <script src="../js/bootstrap.min.js"></script>
+                <script src="../js/jquery.cookie.js"></script>
+                <script src="../js/jquery.validate.min.js"></script>
+                <script src="../js/chart.min.js"></script>
+                <script src="../js/front.js"></script>
+                <script src="../js/axios-0.18.0.js" ></script>
+                <script src="../js/vue.js"></script>
+                <script src="../element-ui/lib/index.js"></script>
+                <link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+                <!--Core Javascript -->
+
+<script>
+    var local = window.location.host;
+    var beginMark = false;
+    var currentX, currentY;
+    var addFlag = 0;
+    new Vue({
+        el:"#menuApp",
+        data(){
+            return{
+                user:[],
+                tasks:[],
+                editForm:{},
+                picUrl:"",
+                result:{
+                    id:"",
+                    min:{
+                        value:"",
+                        x:"",
+                        y:"",
+                    },
+                    middleS:{
+                        value:"",
+                        x:"",
+                        y:"",
+                    },
+                    middleL:{
+                        value:"",
+                        x:"",
+                        y:"",
+                    },
+                    max:{
+                        value:"",
+                        x:"",
+                        y:"",
+                    },
+                },
+            }
+        },
+        methods: {
+            submit(){
+                axios({
+                    method:"post",
+                    url:"http://" + local + "/task/calculate",
+                    data: this.result
+                }).then(resp =>{
+                    console.log(resp.data);
+                    //this.tasks = resp.data;
+                    window.location.href="http://" + local + "/pages/tableTask.html"
+                })
+            },
+
+            addMinXY(){
+                if(this.result.min.value === ""){
+                    alert("请先输入最小刻度值");
+                    return;
+                }
+                this.$message({type: 'success', message: '请在图中点击最小刻度值的位置!',customClass:'new_z_index'});
+                beginMark = true;
+                addFlag = 1;
+            },
+            transmitXY(currentX,currentY){
+                if(addFlag === 1){
+                    this.result.min.x = currentX;
+                    this.result.min.y = currentY;
+                }else if(addFlag === 2){
+                    this.result.middle.x = currentX;
+                    this.result.middle.y = currentY;
+                }else if(addFlag === 3){
+                    this.result.max.x = currentX;
+                    this.result.max.y = currentY;
+                }
+                addFlag = 0;
+            },
+            clearMinXY(){
+                this.result.min.value = "";
+                this.result.min.x = "";
+                this.result.min.y = "";
+                beginMark = false;
+                addFlag = 0;
+            },
+            addMiddleXY(){
+                if(this.result.middle.value === ""){
+                    alert("请先输入中间任意点刻度值");
+                    return;
+                }
+                this.$message({type: 'success', message: '请在图中点击中间对应点刻度值的位置!',customClass:'new_z_index'});
+                beginMark = true;
+                addFlag = 2;
+            },
+            clearMiddleXY(){
+                this.result.middle.value = "";
+                this.result.middle.x = "";
+                this.result.middle.y = "";
+                beginMark = false;
+                addFlag = 0;
+            },
+            addMaxXY(){
+                if(this.result.max.value === ""){
+                    alert("请先输入最大任意点刻度值");
+                    return;
+                }
+                this.$message({type: 'success', message: '请在图中点击最大对应点刻度值的位置!',customClass:'new_z_index'});
+                beginMark = true;
+                addFlag = 3;
+            },
+            clearMaxXY(){
+                this.result.max.value = "";
+                this.result.max.x = "";
+                this.result.max.y = "";
+                beginMark = false;
+                addFlag = 0;
+            },
+
+        },
+
+        mounted(){
+            var url = window.location.href;
+            var num=url.indexOf("=")
+            var id =url.substr(num+1);
+            window.transmitXY = this.transmitXY;
+            this.result.id = id;
+            axios({
+                method:"post",
+                url:"http://" + local + "/task/convertToPic",
+                data: id
+            }).then(resp =>{
+                this.tasks = resp.data;
+            })
+
+            axios({
+                method:"get",
+                url:"http://" + local + "/menu/hostdataservlet"
+            }).then(resp =>{
+                this.user = resp.data;
+                if(this.user.id === 15){
+                    $("#managerInfo1").show();
+                    $("#managerInfo2").show();
+                }else{
+                    $("#managerInfo1").hide();
+                    $("#managerInfo2").hide();
+                }
+            })
+        },
+    })
+
+</script>
+
+<style>
+    .img{position:relative;border:solid 1px #000;display:inline-block;margin:100px 100px;z-index: 1;}
+    .img .marker{position:absolute;width:8px;height:8px;border-radius: 50%;background:#f00;z-index: 999;}
+    /*width:4px;height:4px*/
+    .new_z_index {
+        z-index:99000 !important;
+    }
+</style>
+
+</body>
+
+<script type="text/javascript">
+
+    function createMarker(x, y,divName){
+        var div = document.createElement('div');
+        div.className = 'marker'; div.style.left = x + 'px'; div.style.top = y + 'px';
+        document.getElementById(divName).appendChild(div)
+    }
+    document.getElementById('dv').onclick = function (e) {
+        if(beginMark === false) return;
+        e = e || window.event;
+        var x = e.offsetX || e.layerX, y = e.offsetY || e.layerY;
+        createMarker(x, y,'dv');
+        alert("添加成功！");
+        beginMark = false;
+        currentX = x;
+        currentY = y;
+        transmitXY(currentX, currentY);
+
+    }
+    function MarkSmallImg()
+    {
+        var myImg = document.querySelector("#SmallLiuYiFeiImg");
+        var currWidth = myImg.clientWidth;
+        var currHeight = myImg.clientHeight;
+
+        //给第二个刘亦菲加标记点
+        var x=currWidth*ProportionWidthInImg;
+        var y=currHeight*ProportionHeightInImg;
+        createMarker(x, y,'dv2');
+
+    }
+</script>
+
+</html>

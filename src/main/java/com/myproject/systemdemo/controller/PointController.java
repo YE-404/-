@@ -114,6 +114,7 @@ public class PointController {
     @RequestMapping(value = "/selectByPageAndCondition", method = RequestMethod.POST)
     @ResponseBody
     public void selectByPageAndCondition(HttpServletRequest req, HttpServletResponse res, HttpSession session) throws ServletException, IOException {
+
         Integer userId = (Integer) session.getAttribute("userId");
         String searchType = String.valueOf(userId) + elementType;
         String _currentPage = req.getParameter("currentPage");

@@ -1,9 +1,6 @@
 package com.myproject.systemdemo.server;
 
-import com.myproject.systemdemo.domain.Indicator;
-import com.myproject.systemdemo.domain.Log;
-import com.myproject.systemdemo.domain.Search;
-import com.myproject.systemdemo.domain.WeightMes;
+import com.myproject.systemdemo.domain.*;
 import com.myproject.systemdemo.mapper.UserMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,5 +114,44 @@ public class IndicatorServiceImpl implements IndicatorService {
         searches.setTotalCount(totalCount);
         return searches;
     }
+    public Search<Task> selectTaskByPage(String type, int currentPage, int pageSize){
+        int begin = (currentPage -1) * pageSize;
+        System.out.println(begin);
+        System.out.println(pageSize);
+        List<Task> rows = userMapper.selectTaskByPage(type,begin,pageSize);
+        System.out.println(rows);
+        int totalCount = userMapper.selectTotalCount(type);
+        Search<Task> searches = new Search<>();
+        searches.setRows(rows);
+        searches.setTotalCount(totalCount);
+        return searches;
+    }
+
+
+    public Search<Apparatus> selectApparatusMesByPageAndCondition(String type, int currentPage, int pageSize, Search search){
+        int begin = (currentPage -1) * pageSize;
+        System.out.println(search);
+        if(search != null){
+            String searchType = search.getType();
+            String searchContent = search.getContent();
+            if("TaskName".equals(searchType)){
+                searchContent = "%"+searchContent+"%";
+            }
+            search.setContent(searchContent);
+        }else{
+            search = new Search();
+
+        }
+
+
+        List<Apparatus> rows = userMapper.selectApparatusByPageAndCondition(type,begin, pageSize,search);
+        int totalCount = userMapper.selectTotalCountByCondition(type,search);
+        Search<Apparatus> searches = new Search<>();
+        searches.setRows(rows);
+        searches.setTotalCount(totalCount);
+        return searches;
+    }
+
+
 
 }

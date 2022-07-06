@@ -338,6 +338,8 @@
                               processData: false,
                               contentType: false
                           }).then(resp => {
+                              console.log("-------------formData------------");
+                              console.log(formData);
                               console.log(resp.data);
                               if(resp.data === "lackWeight"){
                                   this.$message({type: 'error', message: "检测功能必须部署并启用Indicator类和Inside类两个模型",customClass:'new_z_index'});
